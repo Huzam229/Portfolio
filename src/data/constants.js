@@ -367,10 +367,8 @@ export const education = [
 ];
 
 export const projects = [
-
-
-    {
-    id: 13,
+  {
+    id: 1,
     title: "Imago",
     date: "Dec 2025 - Jan 2026",
     description:
@@ -390,12 +388,12 @@ export const projects = [
     live: "https://imago-omega.vercel.app/",
   },
   {
-    id: 12,
+    id: 2,
     title: "Food Dungeon",
     date: "Nov 2025 - Dec 2025",
     description:
       "Food Dungeon is a modern restaurant web app where users can browse menus and order delicious foods seamlessly. It features all essential user functionalities and a robust Admin Dashboard for managing menus, orders, and restaurant operations efficiently.",
-    image: "/LandingPage.png" ,
+    image: "/LandingPage.png",
     tags: [
       "React Js",
       "PostgressSQL",
@@ -410,13 +408,13 @@ export const projects = [
   },
 
   {
-    id: 15,
+    id: 3,
     title: "MovieHub",
     date: "April 2023 - July 2023",
     description:
       "MovieHub - A React Native Movie Discovery App. MovieHub is a dynamic and user-friendly mobile application designed to bring the world of movies and TV shows right to your fingertips. Built with React Native, this app leverages the open-source TMDB API to provide real-time access to an extensive database of movies, TV shows, and related content. Whether you're a movie enthusiast or a casual viewer, MovieHub makes it easy to explore the latest releases, discover trending content, and dive into movie details, all from a sleek and intuitive interface.",
     image:
-      "https://raw.githubusercontent.com/Huzam229/MovieHub/refs/heads/main/assets/MovieHub.png",
+      "https://raw.githubusercontent.com/Huzam229/MovieHub/refs/heads/main/assets/image.jpg",
     tags: [
       "React Js",
       "PostgressSQL",
@@ -427,15 +425,15 @@ export const projects = [
     ],
     category: "android app",
     github: "https://github.com/Huzam229/MovieHub",
-    },
-   {
-    id: 14,
+  },
+  {
+    id: 4,
     title: "Foodie",
     date: "Feb 2024 - May 2025",
     description:
       "Foodie- Food Delivery App with Google Maps Integration Foodie is a testing-based food delivery app designed to showcase the capabilities of mobile app development using modern tools and technologies. Developed with React Native, this app integrates the Google Maps API and Sanity.io to provide a seamless and dynamic food ordering experience. While the app is built primarily for testing purposes, it demonstrates the potential for real-world applications, combining location-based services and real-time content management for an engaging user experience.",
     image:
-      "https://raw.githubusercontent.com/Huzam229/FoodApp/refs/heads/main/FoodApp/assets/LandingPage.png",
+      "https://raw.githubusercontent.com/Huzam229/FoodApp/refs/heads/main/FoodApp/assets/image.jpg",
     tags: [
       "React Js",
       "PostgressSQL",
@@ -446,5 +444,28 @@ export const projects = [
     ],
     category: "android app",
     github: "https://github.com/Huzam229/FoodApp/",
-    },
+  },
+  {
+    id: 5,
+    title: "Rido",
+    date: "Dec 2025 - Feb 2026",
+    description:
+      "Rido is an Uber-like ride-hailing mobile application designed to provide a smooth and secure booking experience. The app integrates Clerk for authentication, Stripe for payments, and Google Maps APIs (Maps, Places, and Directions) to enable real-time location tracking, route visualization, and destination search. The backend is built using Express.js with NeonDB for scalable data storage and is deployed on Vercel. The frontend is developed using React Native with Tailwind CSS, ensuring a responsive and clean user interface across devices.",
+    image:
+      "https://raw.githubusercontent.com/Huzam229/Rido_App/refs/heads/main/uber-main/client/assets/image.png",
+    tags: [
+      "React Js",
+      "PostgressSQL",
+      "Node Js",
+      "Express Js",
+      "Clerk",
+      "React Native",
+      "Stripe",
+      "Google Maps API",
+      "NeonDB",
+      "Expo",
+    ],
+    category: "android app",
+    github: "https://github.com/Huzam229/Rido_App/",
+  },
 ];

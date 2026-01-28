@@ -24,9 +24,9 @@ const Card = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 180px;
-  background-color: ${({ theme }) => theme.white};
+  object-fit: contain;
+  background-color: ${({ theme }) => theme.background};
   border-radius: 10px;
-  box-shadow: 0 0 16px 2px rgba(0, 0, 0, 0.3);
 `;
 
 const Details = styled.div`
@@ -95,7 +95,10 @@ const Avatar = styled.img`
   border-radius: 50%;
   margin-left: -10px;
   background-color: ${({ theme }) => theme.white};
-  box-shadow: 0, 0, 10px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0,
+    0,
+    10px rgba(0, 0, 0, 0.2);
   border: 3px solid ${({ theme }) => theme.card};
 `;
 
