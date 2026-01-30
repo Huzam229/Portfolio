@@ -468,4 +468,24 @@ export const projects = [
     category: "android app",
     github: "https://github.com/Huzam229/Rido_App/",
   },
+  {
+    id: 6,
+    title: "Thumbix",
+    date: "Jan 2026 - Feb 2026",
+    description:
+      "Thumbix is a web application that enables users to generate custom thumbnails by adding a title, choosing an aspect ratio, selecting a color scheme, and applying style options. Users can also include additional information or prompts to customize their thumbnails further. The app provides a simple, intuitive interface for designing visually appealing thumbnails without needing image uploads. Built with modern web technologies, Thumbix highlights skills in front-end development, UI/UX design, and interactive user input handling.",
+    image:
+      "https://raw.githubusercontent.com/Huzam229/Thumbix/refs/heads/main/frontend/src/assets/image.png",
+    tags: [
+      "React Js",
+      "MongoDb",
+      "Node Js",
+      "Express Js",
+      "React Flow",
+      "Gemini-Model",
+    ],
+    category: "web app",
+    github: "https://github.com/Huzam229/Thumbix/tree/main",
+    live: "https://thumbix-client.vercel.app/",
+  },
 ];
