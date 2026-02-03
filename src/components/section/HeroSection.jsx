@@ -239,7 +239,9 @@ export const HeroSection = () => {
               <motion.div {...headContainerAnimation}>
                 <SubTitle>{Bio.description}</SubTitle>
               </motion.div>
-              <ResumeButton href={Bio.resume}>Explore Resume</ResumeButton>
+              <ResumeButton href={Bio.resume} target="_blank">
+                Explore Resume
+              </ResumeButton>
             </HeroLeftContainer>
             <HeroRightContainer>
               <motion.div {...headContainerAnimation}>
