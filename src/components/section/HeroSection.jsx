@@ -155,7 +155,9 @@ const ResumeButton = styled.a`
     hsla(294, 100%, 50%, 1) 100%
   );
 
-  box-shadow: 20px 20px 60px #1f2634, -20px -20px 60px #1f2634;
+  box-shadow:
+    20px 20px 60px #1f2634,
+    -20px -20px 60px #1f2634;
 
   &:hover {
     transform: scale(1.05);
@@ -209,8 +211,8 @@ export const HeroSection = () => {
     <div id="about">
       <HeroContainer>
         <HeroBg>
-             {/* 3D Star Background */}
-        <StyledStarCanvas />
+          {/* 3D Star Background */}
+          <StyledStarCanvas />
           <HeroBgAnimation />
         </HeroBg>
         <motion.div {...headContainerAnimation}>
@@ -237,7 +239,7 @@ export const HeroSection = () => {
               <motion.div {...headContainerAnimation}>
                 <SubTitle>{Bio.description}</SubTitle>
               </motion.div>
-              <ResumeButton href="#About">Explore Resume</ResumeButton>
+              <ResumeButton href={Bio.resume}>Explore Resume</ResumeButton>
             </HeroLeftContainer>
             <HeroRightContainer>
               <motion.div {...headContainerAnimation}>
