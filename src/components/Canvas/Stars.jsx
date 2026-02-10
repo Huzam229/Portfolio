@@ -19,10 +19,10 @@ const Stars = (props) => {
   const sphere = useMemo(
     () =>
       random.inSphere(new Float32Array(8000 * 3), {
-        radius: 1.5, 
+        radius: 1.5,
         seed: 42,
       }),
-    []
+    [],
   );
 
   useFrame((state, delta) => {
@@ -39,11 +39,11 @@ const Stars = (props) => {
         <PointMaterial
           transparent
           color="#f272c8"
-          size={0.003} // Smaller size for more star-like appearance
+          size={0.002} // Smaller size for more star-like appearance
           sizeAttenuation={true}
           depthWrite={false}
           opacity={0.8}
-         // blending={2} // Additive blending for glow effect
+          // blending={2} // Additive blending for glow effect
         />
       </Points>
     </group>
@@ -54,11 +54,11 @@ const StyledStarCanvas = () => {
   return (
     <StyledStarWrapper>
       <Canvas
-        camera={{ position: [0, 0, 1], fov: 75 }} // Much closer camera
-        gl={{ 
+        camera={{ position: [0, 0, 1], fov: 85 }} // Much closer camera
+        gl={{
           alpha: true,
           antialias: true,
-          powerPreference: "high-performance"
+          // powerPreference: "high-performance",
         }}
         style={{ background: "transparent" }}
         dpr={[1, 2]} // Device pixel ratio for sharper rendering
