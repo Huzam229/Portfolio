@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Bio } from "../../data/constants";
 import Typewriter from "typewriter-effect";
-import HeroImage from "../../images/HeroImage.jpg";
+import my_image from "../../images/my_image.png";
 import HeroBgAnimation from "../HeroBgAnimation";
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
@@ -52,7 +52,8 @@ const HeroRightContainer = styled.div`
   width: 100%;
   order: 2;
   display: flex;
-  justify-content: end;
+  justify-content: center;
+  margin-left: 110px;
   @media (max-width: 960px) {
     order: 1;
     display: flex;
@@ -60,6 +61,7 @@ const HeroRightContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 80px;
+    margin-left: 0;
   }
 
   @media (max-width: 640px) {
@@ -176,9 +178,9 @@ const Img = styled.img`
   border-radius: 50%;
   width: 100%;
   height: 100%;
-  max-width: 400px;
+  max-width: 450px;
   max-height: 400px;
-  border: 2px solid ${({ theme }) => theme.primary};
+  border: 1.5px solid ${({ theme }) => theme.primary};
 
    @media (max-width: 640px) {
     max-width: 280px;
@@ -246,7 +248,7 @@ export const HeroSection = () => {
             <HeroRightContainer>
               <motion.div {...headContainerAnimation}>
                 <Tilt>
-                  <Img src={HeroImage} alt="Khuzama Asif" />
+                  <Img src={my_image} alt="Khuzama Asif" />
                 </Tilt>
               </motion.div>
             </HeroRightContainer>
