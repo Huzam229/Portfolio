@@ -1,11 +1,6 @@
 export const Bio = {
   name: "Muhammad Khuzama",
-  roles: [
-    "Full Stack Developer",
-    "Android Developer",
-    "UI/UX Designer",
-    "Programmer",
-  ],
+  roles: ["Full Stack Developer", "Android Developer", "Programmer"],
   description:
     "Driven by curiosity and a passion for growth, I embrace new challenges with confidence and creativity. I am committed to delivering high-quality work and continuously expanding my skills. With a positive mindset and a dedication to excellence, I aim to create meaningful impact in everything I do.",
   github: "https://github.com/Huzam229",
