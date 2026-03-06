@@ -483,27 +483,27 @@ export const projects = [
     github: "https://github.com/Huzam229/Thumbix/tree/main",
     live: "https://thumbix-client.vercel.app/",
   },
-  {
-    id: 7,
-    title: "Chatterly",
-    date: "Feb 2026 - April 2026",
-    description:
-      "Chatterly is a real-time language learning web application that allows users to connect with friends, exchange messages, and practice languages through video calls. The platform is built using the MERN stack (MongoDB, Express.js, React.js, Node.js) and integrates the Stream Chat API to enable real-time messaging and communication. Users can send friend requests, chat instantly, and join video calls to improve their language skills through real conversations in a simple and interactive interface.",
-    image:
-      "https://raw.githubusercontent.com/Huzam229/Chatterly/refs/heads/main/frontend/public/Image_2.png",
-    tags: [
-      "React Js",
-      "MongoDb",
-      "Node Js",
-      "Express Js",
-      "React Flow",
-      "Stream",
-      "DaisyUI",
-      "zustand",
-      "TanStack Query",
-    ],
-    category: "web app",
-    github: "https://github.com/Huzam229/Chatterly",
-    live: "https://chatterly-pink.vercel.app/",
-  },
+  // {
+  //   id: 7,
+  //   title: "Chatterly",
+  //   date: "Feb 2026 - April 2026",
+  //   description:
+  //     "Chatterly is a real-time language learning web application that allows users to connect with friends, exchange messages, and practice languages through video calls. The platform is built using the MERN stack (MongoDB, Express.js, React.js, Node.js) and integrates the Stream Chat API to enable real-time messaging and communication. Users can send friend requests, chat instantly, and join video calls to improve their language skills through real conversations in a simple and interactive interface.",
+  //   image:
+  //     "https://raw.githubusercontent.com/Huzam229/Chatterly/refs/heads/main/frontend/public/Image_2.png",
+  //   tags: [
+  //     "React Js",
+  //     "MongoDb",
+  //     "Node Js",
+  //     "Express Js",
+  //     "React Flow",
+  //     "Stream",
+  //     "DaisyUI",
+  //     "zustand",
+  //     "TanStack Query",
+  //   ],
+  //   category: "web app",
+  //   github: "https://github.com/Huzam229/Chatterly",
+  //   live: "https://chatterly-pink.vercel.app/",
+  // },
 ];
