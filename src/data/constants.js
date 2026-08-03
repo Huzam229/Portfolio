@@ -5,7 +5,7 @@ export const Bio = {
     "Driven by curiosity and a passion for growth, I embrace new challenges with confidence and creativity. I am committed to delivering high-quality work and continuously expanding my skills. With a positive mindset and a dedication to excellence, I aim to create meaningful impact in everything I do.",
   github: "https://github.com/Huzam229",
   resume:
-    "https://drive.google.com/file/d/1fH4Yv_kZ9xDW2TeSrpUx_nyoMLHQho89/view",
+    "https://drive.google.com/file/d/1k5C3tkNe_3Fpu-L_4OEJwy_aWzO6PVnO/view",
   linkedin: "https://www.linkedin.com/in/khuzama-asif-66633633b/",
 };
 
