@@ -22,7 +22,7 @@ const SkillCard = styled(motion.article)`
   transition: border-color 0.25s ease, transform 0.25s ease;
 
   &:hover {
-    border-color: rgba(46, 230, 199, 0.35);
+    border-color: ${({ theme }) => theme.primary};
     transform: translateY(-4px);
   }
 

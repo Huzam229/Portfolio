@@ -132,8 +132,8 @@ const ContactButton = styled.button`
   border-radius: 999px;
   padding: 13px 16px;
   margin-top: 4px;
-  background: linear-gradient(135deg, ${({ theme }) => theme.primary} 0%, #7ef0dc 100%);
-  color: #04110e;
+  background: linear-gradient(135deg, ${({ theme }) => theme.primary} 0%, ${({ theme }) => theme.primaryHover} 100%);
+  color: ${({ theme }) => theme.onPrimary};
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;

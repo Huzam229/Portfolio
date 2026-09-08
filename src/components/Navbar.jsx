@@ -18,25 +18,25 @@ const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 20;
+  width: 100%;
   display: flex;
   justify-content: center;
-  padding: 14px 20px 0;
+  padding: 12px 20px;
+  background: ${({ theme }) => theme.bg};
 `;
 
 const NavbarContainer = styled.div`
   width: 100%;
-  max-width: 1180px;
+  max-width: 1140px;
   height: 68px;
   padding: 0 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid
-    ${({ $scrolled, theme }) => ($scrolled ? theme.border : "transparent")};
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 18px;
-  background: ${({ $scrolled, theme }) =>
-    $scrolled ? theme.glass : "transparent"};
-  backdrop-filter: ${({ $scrolled }) => ($scrolled ? "blur(18px)" : "none")};
+  background: ${({ theme }) => theme.glass};
+  backdrop-filter: blur(18px);
   box-shadow: ${({ $scrolled }) =>
     $scrolled ? "0 10px 40px rgba(0, 0, 0, 0.28)" : "none"};
   transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -53,6 +53,7 @@ const NavBarLogo = styled(LinkR)`
 const LogoImage = styled.img`
   width: 118px;
   height: auto;
+  display: block;
 `;
 
 const NavItem = styled.ul`

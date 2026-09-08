@@ -95,8 +95,8 @@ function App() {
           }}
         />
         <ScrollProgress />
-        <Navbar />
         <Body>
+          <Navbar />
           <StyledStarCanvas />
           <Grain />
           <HeroSection />

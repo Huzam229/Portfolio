@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { projects } from "../../data/constants";
 import { ProjectCard } from "../cards/ProjectCard";
+import ProjectModal from "../cards/ProjectModal";
 import { Section, SectionHeader, SectionInner } from "../shared/Section";
 
 const FILTERS = [
@@ -34,7 +35,7 @@ const ToggleButton = styled.button`
   background: ${({ $active, theme }) =>
     $active ? theme.primary : "transparent"};
   color: ${({ $active, theme }) =>
-    $active ? "#04110e" : theme.text_secondary};
+    $active ? theme.onPrimary : theme.text_secondary};
   font-size: 14px;
   font-weight: 600;
   border-radius: 999px;
@@ -46,7 +47,7 @@ const ToggleButton = styled.button`
   transition: background 0.2s ease, color 0.2s ease;
 
   &:hover {
-    color: ${({ $active, theme }) => ($active ? "#04110e" : theme.text_primary)};
+    color: ${({ $active, theme }) => ($active ? theme.onPrimary : theme.text_primary)};
   }
 `;
 
@@ -94,6 +95,7 @@ const getCount = (id) =>
 
 const Projects = () => {
   const [toggle, setToggle] = useState("all");
+  const [selected, setSelected] = useState(null);
   const visibleProjects = projects.filter(
     (item) => toggle === "all" || item.category === toggle
   );
@@ -135,12 +137,13 @@ const Projects = () => {
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <ProjectCard item={item} />
+                  <ProjectCard item={item} onOpen={setSelected} />
                 </motion.div>
               ))}
             </AnimatePresence>
           )}
         </CardContainer>
+        <ProjectModal item={selected} onClose={() => setSelected(null)} />
       </SectionInner>
     </Section>
   );

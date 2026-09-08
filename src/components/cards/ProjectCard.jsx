@@ -8,12 +8,13 @@ const Card = styled.article`
   border-radius: 20px;
   overflow: hidden;
   min-height: 100%;
+  cursor: pointer;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-6px);
-    border-color: rgba(46, 230, 199, 0.3);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+    border-color: ${({ theme }) => theme.primary};
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   }
 `;
 
@@ -36,6 +37,26 @@ const Image = styled.img`
   }
 `;
 
+const Overlay = styled.div`
+  position: absolute;
+  inset: 14px 14px 0;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: ${({ theme }) => theme.overlay};
+  color: ${({ theme }) => theme.white};
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+
+  ${Card}:hover & {
+    opacity: 1;
+  }
+`;
+
 const Category = styled.span`
   position: absolute;
   top: 24px;
@@ -44,7 +65,7 @@ const Category = styled.span`
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #04110e;
+  color: ${({ theme }) => theme.onPrimary};
   background: ${({ theme }) => theme.primary};
   padding: 5px 9px;
   border-radius: 999px;
@@ -115,7 +136,7 @@ const Button = styled.a`
   border-radius: 999px;
   border: 1px solid ${({ theme, $filled }) => ($filled ? "transparent" : theme.border)};
   background: ${({ theme, $filled }) => ($filled ? theme.primary : "transparent")};
-  color: ${({ theme, $filled }) => ($filled ? "#04110e" : theme.text_primary)};
+  color: ${({ theme, $filled }) => ($filled ? theme.onPrimary : theme.text_primary)};
   transition: transform 0.2s ease, opacity 0.2s ease;
 
   &:hover {
@@ -124,14 +145,15 @@ const Button = styled.a`
   }
 `;
 
-export const ProjectCard = ({ item }) => {
+export const ProjectCard = ({ item, onOpen }) => {
   const visibleTags = item.tags?.slice(0, 4) || [];
   const extraTags = (item.tags?.length || 0) - visibleTags.length;
 
   return (
-    <Card>
+    <Card onClick={() => onOpen(item)}>
       <ImageWrap>
         <Image src={item.image} alt={item.title} />
+        <Overlay>View details</Overlay>
         <Category>{item.category}</Category>
       </ImageWrap>
       <Details>
@@ -146,11 +168,22 @@ export const ProjectCard = ({ item }) => {
         {extraTags > 0 && <Tag>+{extraTags}</Tag>}
       </Tags>
       <ButtonContainer>
-        <Button href={item.github} target="_blank" rel="noreferrer">
+        <Button
+          href={item.github}
+          target="_blank"
+          rel="noreferrer"
+          onClick={(event) => event.stopPropagation()}
+        >
           Code
         </Button>
         {item.live && (
-          <Button href={item.live} target="_blank" rel="noreferrer" $filled>
+          <Button
+            href={item.live}
+            target="_blank"
+            rel="noreferrer"
+            $filled
+            onClick={(event) => event.stopPropagation()}
+          >
             Live
           </Button>
         )}

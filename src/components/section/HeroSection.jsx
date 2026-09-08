@@ -24,11 +24,12 @@ const HeroContainer = styled.section`
 const HeroInnerContainer = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 48px;
   width: 100%;
-  max-width: 1140px;
+  max-width: 1100px;
+  margin: 0 auto;
 
   @media (max-width: 960px) {
     grid-template-columns: 1fr;
@@ -221,7 +222,7 @@ const Glow = styled.div`
   position: absolute;
   inset: 12%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(46, 230, 199, 0.28), transparent 68%);
+  background: radial-gradient(circle, ${({ theme }) => theme.glow}, transparent 68%);
   filter: blur(18px);
   z-index: 0;
 `;
@@ -236,7 +237,7 @@ const Img = styled.img`
   border-radius: 50%;
   border: 1px solid ${({ theme }) => theme.border};
   box-shadow:
-    0 0 0 8px rgba(46, 230, 199, 0.08),
+    0 0 0 8px ${({ theme }) => theme.glow},
     0 20px 60px rgba(0, 0, 0, 0.4);
 `;
 
@@ -262,7 +263,16 @@ export const HeroSection = () => {
         <HeroBg>
           <HeroBgAnimation />
         </HeroBg>
-        <motion.div {...headContainerAnimation}>
+        <motion.div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            position: "relative",
+            zIndex: 1,
+          }}
+          {...headContainerAnimation}
+        >
           <HeroInnerContainer>
             <HeroLeftContainer>
               <motion.div {...headTextAnimation}>

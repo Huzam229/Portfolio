@@ -8,7 +8,6 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
   scroll-padding-top: 96px;
 }
 
@@ -47,12 +46,12 @@ h4 {
 }
 
 .vertical-timeline::before {
-  background: rgba(46, 230, 199, 0.22) !important;
+  background: var(--timeline-line, rgba(46, 230, 199, 0.22)) !important;
   width: 2px !important;
 }
 
 .vertical-timeline-element-date {
-  color: #9aa4b5 !important;
+  color: inherit !important;
   font-family: "Outfit", sans-serif !important;
   opacity: 0.9 !important;
 }

@@ -1,5 +1,5 @@
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 
 const Top = styled.div`
   width: 100%;
@@ -56,6 +56,7 @@ const Grade = styled.p`
 `;
 
 const EducationCard = ({ item }) => {
+  const theme = useTheme();
   return (
     <VerticalTimelineElement
       icon={
@@ -69,21 +70,21 @@ const EducationCard = ({ item }) => {
       }
       iconStyle={{
         background: "#fff",
-        boxShadow: "0 0 0 4px #e8c07a",
+        boxShadow: `0 0 0 4px ${theme.accent}`,
       }}
       contentStyle={{
         display: "flex",
         flexDirection: "column",
         gap: "12px",
-        color: "#fff",
-        background: "rgba(13, 18, 27, 0.92)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        color: theme.text_primary,
+        background: theme.card,
+        border: `1px solid ${theme.border}`,
         borderRadius: "18px",
-        boxShadow: "0 12px 32px rgba(0,0,0,0.25)",
+        boxShadow: "0 12px 32px rgba(0,0,0,0.12)",
         padding: "22px",
       }}
       contentArrowStyle={{
-        borderRight: "7px solid rgba(255, 255, 255, 0.12)",
+        borderRight: `7px solid ${theme.border}`,
       }}
       date={item.date}
     >

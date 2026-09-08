@@ -26,12 +26,12 @@ const buttonBase = css`
 
 export const PrimaryButton = styled.a`
   ${buttonBase}
-  color: #04110e;
+  color: ${({ theme }) => theme.onPrimary};
   background: linear-gradient(135deg, ${({ theme }) => theme.primary} 0%, #7ef0dc 100%);
-  box-shadow: 0 8px 32px rgba(46, 230, 199, 0.22);
+  box-shadow: 0 8px 32px ${({ theme }) => theme.glow};
 
   &:hover {
-    box-shadow: 0 12px 40px rgba(46, 230, 199, 0.32);
+    box-shadow: 0 12px 40px ${({ theme }) => theme.glow};
   }
 `;
 
