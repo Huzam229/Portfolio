@@ -9,6 +9,7 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  scroll-padding-top: 96px;
 }
 
 body {
@@ -59,5 +60,23 @@ h4 {
 @media (max-width: 1169px) {
   .vertical-timeline-element-date {
     display: none !important;
+  }
+}
+
+#about {
+  scroll-margin-top: 96px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

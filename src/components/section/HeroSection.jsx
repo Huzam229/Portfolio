@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Bio } from "../../data/constants";
+import { Bio, experiences, projects } from "../../data/constants";
 import Typewriter from "typewriter-effect";
 import my_image from "../../images/my_image.png";
 import HeroBgAnimation from "../HeroBgAnimation";
@@ -201,8 +201,9 @@ const Stat = styled.div`
   strong {
     display: block;
     font-family: "Syne", sans-serif;
-    font-size: 22px;
+    font-size: 18px;
     color: ${({ theme }) => theme.text_primary};
+    line-height: 1.2;
   }
 
   span {
@@ -289,7 +290,7 @@ export const HeroSection = () => {
                 <PrimaryButton href={Bio.resume} target="_blank" rel="noreferrer">
                   View Resume
                 </PrimaryButton>
-                <GhostButton href="#Contact">Let&apos;s Talk</GhostButton>
+                <GhostButton href="#Projects">See work</GhostButton>
               </CtaRow>
               <SocialRow>
                 <SocialLink href={Bio.github} target="_blank" rel="noreferrer" aria-label="GitHub">
@@ -305,12 +306,14 @@ export const HeroSection = () => {
                   <span>Years crafting products</span>
                 </Stat>
                 <Stat>
-                  <strong>7</strong>
+                  <strong>{projects.length}</strong>
                   <span>Shipped projects</span>
                 </Stat>
                 <Stat>
-                  <strong>FS + Android</strong>
-                  <span>End-to-end delivery</span>
+                  <strong>Now</strong>
+                  <span>
+                    {experiences[0]?.role} @ {experiences[0]?.company}
+                  </span>
                 </Stat>
               </Stats>
             </HeroLeftContainer>

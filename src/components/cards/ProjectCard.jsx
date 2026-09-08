@@ -20,6 +20,7 @@ const Card = styled.article`
 const ImageWrap = styled.div`
   position: relative;
   padding: 14px 14px 0;
+  overflow: hidden;
 `;
 
 const Image = styled.img`
@@ -28,6 +29,11 @@ const Image = styled.img`
   object-fit: contain;
   background: ${({ theme }) => theme.bgLight};
   border-radius: 14px;
+  transition: transform 0.45s ease;
+
+  ${Card}:hover & {
+    transform: scale(1.05);
+  }
 `;
 
 const Category = styled.span`
@@ -42,6 +48,7 @@ const Category = styled.span`
   background: ${({ theme }) => theme.primary};
   padding: 5px 9px;
   border-radius: 999px;
+  z-index: 1;
 `;
 
 const Details = styled.div`

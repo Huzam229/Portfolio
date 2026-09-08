@@ -305,10 +305,10 @@ export const experiences = [
   {
     id: 0,
     img: "https://pro.concavetech.com/dist/assets/images/tt2logo.png",
-    role: "Associate Software Engineer",
+    role: "Full Stack Developer",
     company: "TradeTracker",
     date: "March 2025 - Today",
-    desc: "As an Associate Software Engineer at TradeTracker, I work across both frontend and backend development. I build responsive and dynamic user interfaces using Angular and develop robust backend services with Spring Boot. I also troubleshoot and optimize SQL queries to ensure smooth database operations. My role involves collaborating with teams, resolving technical issues, and delivering efficient end-to-end solutions.",
+    desc: "As an Full Stack Developer at TradeTracker, I work across both frontend and backend development. I build responsive and dynamic user interfaces using Angular and develop robust backend services with Spring Boot. I also troubleshoot and optimize SQL queries to ensure smooth database operations. My role involves collaborating with teams, resolving technical issues, and delivering efficient end-to-end solutions.",
     skills: [
       "Angular",
       "TypeScript",

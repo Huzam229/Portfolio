@@ -3,9 +3,10 @@ import { Link as LinkR } from "react-router-dom";
 import { Bio } from "../data/constants";
 import { MenuRounded, CloseRounded } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const NAV_LINKS = [
+  { href: "#about", label: "About" },
   { href: "#Skills", label: "Skills" },
   { href: "#Experience", label: "Experience" },
   { href: "#Projects", label: "Projects" },
@@ -31,8 +32,7 @@ const NavbarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   border: 1px solid
-    ${({ $scrolled, theme }) =>
-      $scrolled ? theme.border : "transparent"};
+    ${({ $scrolled, theme }) => ($scrolled ? theme.border : "transparent")};
   border-radius: 18px;
   background: ${({ $scrolled, theme }) =>
     $scrolled ? theme.glass : "transparent"};
@@ -58,16 +58,19 @@ const LogoImage = styled.img`
 const NavItem = styled.ul`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   list-style: none;
 
-  @media (max-width: 900px) {
+  @media (max-width: 980px) {
     display: none;
   }
 `;
 
 const NavLink = styled.a`
-  color: ${({ theme }) => theme.text_secondary};
+  color: ${({ $active, theme }) =>
+    $active ? theme.primary : theme.text_secondary};
+  background: ${({ $active }) =>
+    $active ? "rgba(46, 230, 199, 0.1)" : "transparent"};
   font-weight: 500;
   font-size: 14px;
   cursor: pointer;
@@ -82,6 +85,33 @@ const NavLink = styled.a`
   }
 `;
 
+const Actions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @media (max-width: 980px) {
+    display: none;
+  }
+`;
+
+const IconLink = styled.a`
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid ${({ theme }) => theme.border};
+  color: ${({ theme }) => theme.text_primary};
+  font-size: 16px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.primary};
+  }
+`;
+
 const GitHubProfile = styled.a`
   display: inline-flex;
   align-items: center;
@@ -93,21 +123,12 @@ const GitHubProfile = styled.a`
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 
   &:hover {
     border-color: ${({ theme }) => theme.primary};
     color: ${({ theme }) => theme.primary};
     transform: translateY(-1px);
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-
-  @media (max-width: 900px) {
-    display: none;
   }
 `;
 
@@ -119,7 +140,7 @@ const MobileIcon = styled.button`
   cursor: pointer;
   padding: 6px;
 
-  @media (max-width: 900px) {
+  @media (max-width: 980px) {
     display: flex;
   }
 `;
@@ -127,7 +148,7 @@ const MobileIcon = styled.button`
 const MobileMenu = styled.div`
   display: none;
 
-  @media (max-width: 900px) {
+  @media (max-width: 980px) {
     display: ${({ $open }) => ($open ? "flex" : "none")};
     position: absolute;
     top: 90px;
@@ -136,7 +157,6 @@ const MobileMenu = styled.div`
     flex-direction: column;
     gap: 8px;
     padding: 18px;
-    list-style: none;
     background: ${({ theme }) => theme.glass};
     border: 1px solid ${({ theme }) => theme.border};
     border-radius: 18px;
@@ -149,18 +169,58 @@ const MobileMenu = styled.div`
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("about");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const ids = NAV_LINKS.map((link) => link.href.slice(1));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-35% 0px -55% 0px", threshold: 0 }
+    );
+
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = openMenu ? "hidden" : "";
+    const onKey = (event) => {
+      if (event.key === "Escape") setOpenMenu(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [openMenu]);
+
+  const scrollHome = (event) => {
+    event.preventDefault();
+    setOpenMenu(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <Nav>
       <NavbarContainer $scrolled={scrolled}>
-        <NavBarLogo to="/">
+        <NavBarLogo to="/" onClick={scrollHome}>
           <LogoImage src="/logo.png" alt="Muhammad Khuzama" />
         </NavBarLogo>
 
@@ -174,7 +234,9 @@ const Navbar = () => {
         <NavItem>
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <NavLink href={link.href}>{link.label}</NavLink>
+              <NavLink href={link.href} $active={active === link.href.slice(1)}>
+                {link.label}
+              </NavLink>
             </li>
           ))}
         </NavItem>
@@ -184,6 +246,7 @@ const Navbar = () => {
             <NavLink
               key={link.href}
               href={link.href}
+              $active={active === link.href.slice(1)}
               onClick={() => setOpenMenu(false)}
             >
               {link.label}
@@ -195,12 +258,15 @@ const Navbar = () => {
           </GitHubProfile>
         </MobileMenu>
 
-        <ButtonContainer>
+        <Actions>
+          <IconLink href={Bio.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <FaLinkedin />
+          </IconLink>
           <GitHubProfile href={Bio.github} target="_blank" rel="noreferrer">
             <FaGithub />
             GitHub
           </GitHubProfile>
-        </ButtonContainer>
+        </Actions>
       </NavbarContainer>
     </Nav>
   );

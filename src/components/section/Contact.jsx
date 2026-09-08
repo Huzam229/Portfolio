@@ -39,6 +39,12 @@ const InfoTitle = styled.h3`
 const InfoText = styled.p`
   color: ${({ theme }) => theme.text_secondary};
   line-height: 1.7;
+  margin-bottom: 18px;
+`;
+
+const Meta = styled.p`
+  font-size: 13px;
+  color: ${({ theme }) => theme.primary};
   margin-bottom: 24px;
 `;
 
@@ -97,6 +103,7 @@ const ContactInput = styled.input`
 
   &:focus {
     border-color: ${({ theme }) => theme.primary};
+    box-shadow: 0 0 0 3px rgba(46, 230, 199, 0.12);
   }
 `;
 
@@ -115,6 +122,7 @@ const ContactInputMessage = styled.textarea`
 
   &:focus {
     border-color: ${({ theme }) => theme.primary};
+    box-shadow: 0 0 0 3px rgba(46, 230, 199, 0.12);
   }
 `;
 
@@ -188,6 +196,7 @@ const Contact = () => {
                 backend systems. Reach out if you want someone who can own the
                 full path from idea to launch.
               </InfoText>
+              <Meta>Usually replies within 24 hours.</Meta>
             </div>
             <Socials>
               <SocialLink href={Bio.github} target="_blank" rel="noreferrer">

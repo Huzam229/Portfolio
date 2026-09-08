@@ -7,6 +7,7 @@ export const Section = styled.section`
   position: relative;
   z-index: 1;
   padding: 88px 24px;
+  scroll-margin-top: 96px;
 
   @media (max-width: 768px) {
     padding: 64px 16px;

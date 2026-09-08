@@ -2,6 +2,9 @@ import styled, { ThemeProvider } from "styled-components";
 import { darkTheme } from "./utils/Themes";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ScrollProgress from "./components/ScrollProgress";
+import ScrollToTop from "./components/ScrollToTop";
+import TechMarquee from "./components/TechMarquee";
 import { BrowserRouter } from "react-router-dom";
 import { HeroSection } from "./components/section/HeroSection";
 import Skills from "./components/section/Skills";
@@ -91,11 +94,13 @@ function App() {
             },
           }}
         />
+        <ScrollProgress />
         <Navbar />
         <Body>
           <StyledStarCanvas />
           <Grain />
           <HeroSection />
+          <TechMarquee />
           <AmbientGlow>
             <Skills />
             <Experience />
@@ -106,6 +111,7 @@ function App() {
             <Contact />
           </AmbientGlow>
           <Footer />
+          <ScrollToTop />
         </Body>
       </BrowserRouter>
     </ThemeProvider>

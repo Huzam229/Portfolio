@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { AnimatePresence, motion } from "framer-motion";
 import { projects } from "../../data/constants";
 import { ProjectCard } from "../cards/ProjectCard";
 import { Section, SectionHeader, SectionInner } from "../shared/Section";
@@ -39,11 +40,27 @@ const ToggleButton = styled.button`
   border-radius: 999px;
   padding: 8px 16px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: background 0.2s ease, color 0.2s ease;
 
   &:hover {
     color: ${({ $active, theme }) => ($active ? "#04110e" : theme.text_primary)};
   }
+`;
+
+const Count = styled.span`
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  background: ${({ $active }) =>
+    $active ? "rgba(4, 17, 14, 0.16)" : "rgba(255, 255, 255, 0.06)"};
 `;
 
 const CardContainer = styled.div`
@@ -70,6 +87,11 @@ const EmptyState = styled.div`
   color: ${({ theme }) => theme.text_secondary};
 `;
 
+const getCount = (id) =>
+  id === "all"
+    ? projects.length
+    : projects.filter((item) => item.category === id).length;
+
 const Projects = () => {
   const [toggle, setToggle] = useState("all");
   const visibleProjects = projects.filter(
@@ -92,6 +114,7 @@ const Projects = () => {
               onClick={() => setToggle(filter.id)}
             >
               {filter.label}
+              <Count $active={toggle === filter.id}>{getCount(filter.id)}</Count>
             </ToggleButton>
           ))}
         </ToggleButtonGroup>
@@ -102,9 +125,20 @@ const Projects = () => {
               shipped work.
             </EmptyState>
           ) : (
-            visibleProjects.map((item) => (
-              <ProjectCard key={item.id} item={item} />
-            ))
+            <AnimatePresence mode="popLayout">
+              {visibleProjects.map((item) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <ProjectCard item={item} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           )}
         </CardContainer>
       </SectionInner>
