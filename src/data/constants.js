@@ -61,7 +61,7 @@ export const skills = [
       {
         name: "Tailwind CSS",
         image:
-          "https://tailwindcss.com/_next/static/media/tailwindcss-mark.96ee6a5a.svg",
+          "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
       },
     ],
   },

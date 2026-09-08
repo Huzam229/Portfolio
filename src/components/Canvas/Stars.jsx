@@ -38,7 +38,7 @@ const Stars = (props) => {
       <Points positions={sphere} stride={3} frustumCulled {...props}>
         <PointMaterial
           transparent
-          color="#f272c8"
+          color="#7ef0dc"
           size={0.002} // Smaller size for more star-like appearance
           sizeAttenuation={true}
           depthWrite={false}

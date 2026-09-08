@@ -1,149 +1,114 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { projects } from "../../data/constants";
 import { ProjectCard } from "../cards/ProjectCard";
+import { Section, SectionHeader, SectionInner } from "../shared/Section";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-  align-items: center;
-  margin-top: 50px;
-  padding: 0 16px;
-`;
-const Wrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  max-width: 1100px;
-  gap: 12px;
-  @media (max-width: 960px) {
-    flex-direction: column;
-  }
-`;
-const Title = styled.div`
-  font-size: 52px;
-  text-align: center;
-  font-weight: 600;
-  margin-top: 40px;
-  color: ${({ theme }) => theme.text_primary};
-  @media (max-width: 768px) {
-    margin-top: 12px;
-    font-size: 32px;
-  }
-`;
-const Description = styled.div`
-  font-size: 18px;
-  text-align: center;
-  font-weight: 600;
-  color: ${({ theme }) => theme.text_secondary};
-  @media (max-width: 768px) {
-    margin-top: 12px;
-    font-size: 16px;
-  }
-`;
+const FILTERS = [
+  { id: "all", label: "All" },
+  { id: "web app", label: "Web Apps" },
+  { id: "android app", label: "Android" },
+  { id: "machine learning", label: "Machine Learning" },
+];
 
 const ToggleButtonGroup = styled.div`
   display: flex;
-  border: 1px solid ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.primary};
-  font-size: 16px;
-  border-radius: 12px;
-  margin: 22px 0px;
-  font-weight: 500;
-  @media (max-width: 768px) {
-    font-size: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid ${({ theme }) => theme.border};
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 999px;
+  margin-bottom: 36px;
+
+  @media (max-width: 640px) {
+    border-radius: 18px;
+    width: 100%;
   }
 `;
 
-const ToggleButton = styled.div`
-  padding: 8px 18px;
-  border-radius: 6px;
+const ToggleButton = styled.button`
+  border: 0;
+  background: ${({ $active, theme }) =>
+    $active ? theme.primary : "transparent"};
+  color: ${({ $active, theme }) =>
+    $active ? "#04110e" : theme.text_secondary};
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 8px 16px;
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+
   &:hover {
-  background: ${({ theme }) => theme.primary + 20};
-
-  @media (max-width: 768px) {
-    padding: 6px 8px;
-    border-radius: 4px;
+    color: ${({ $active, theme }) => ($active ? "#04110e" : theme.text_primary)};
   }
-    ${({ $active, theme }) =>
-      $active &&
-      `
-    background: ${theme.primary + 20}
-    `};
-`;
-
-const Divider = styled.div`
-  width: 1.5px;
-  background: ${({ theme }) => theme.primary};
 `;
 
 const CardContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 28px;
-  flex-wrap: wrap;
-  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  width: 100%;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 680px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const EmptyState = styled.div`
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 20px;
+  border: 1px dashed ${({ theme }) => theme.border};
+  border-radius: 20px;
+  color: ${({ theme }) => theme.text_secondary};
 `;
 
 const Projects = () => {
   const [toggle, setToggle] = useState("all");
-  return (
-    <Container id="Projects">
-      <Wrapper>
-        <Title>Projects</Title>
-        <Description style={{ marginBottom: "40px" }}>
-          A showcase of my key projects, demonstrating my skills in frontend and
-          backend development, database management, and problem-solving. Each
-          project highlights my ability to build functional, responsive, and
-          efficient applications using modern technologies.
-        </Description>
-        <ToggleButtonGroup>
-          <ToggleButton
-            $active={toggle === "all"}
-            onClick={() => setToggle("all")}
-          >
-            ALL
-          </ToggleButton>{" "}
-          <Divider />
-          <ToggleButton
-            $active={toggle === "web app"}
-            onClick={() => setToggle("web app")}
-          >
-            WEB APP's
-          </ToggleButton>
-          <Divider />
-          <ToggleButton
-            $active={toggle === "android app"}
-            onClick={() => setToggle("android app")}
-          >
-            ANDROID APPS
-          </ToggleButton>
-          <Divider />
-          <ToggleButton
-            $active={toggle === "machine learning"}
-            onClick={() => setToggle("machine learning")}
-          >
-            MACHINE LEARNING
-          </ToggleButton>
-        </ToggleButtonGroup>
+  const visibleProjects = projects.filter(
+    (item) => toggle === "all" || item.category === toggle
+  );
 
+  return (
+    <Section id="Projects">
+      <SectionInner>
+        <SectionHeader
+          eyebrow="Selected work"
+          title="Projects"
+          description="A mix of web and mobile products — from AI image tools to ride-hailing and restaurant platforms."
+        />
+        <ToggleButtonGroup>
+          {FILTERS.map((filter) => (
+            <ToggleButton
+              key={filter.id}
+              $active={toggle === filter.id}
+              onClick={() => setToggle(filter.id)}
+            >
+              {filter.label}
+            </ToggleButton>
+          ))}
+        </ToggleButtonGroup>
         <CardContainer>
-          {projects
-            .filter((item) => toggle === "all" || item.category === toggle)
-            .map((item) => (
+          {visibleProjects.length === 0 ? (
+            <EmptyState>
+              Machine learning projects are on the way. Check the other tabs for
+              shipped work.
+            </EmptyState>
+          ) : (
+            visibleProjects.map((item) => (
               <ProjectCard key={item.id} item={item} />
-            ))}
+            ))
+          )}
         </CardContainer>
-      </Wrapper>
-    </Container>
+      </SectionInner>
+    </Section>
   );
 };
 

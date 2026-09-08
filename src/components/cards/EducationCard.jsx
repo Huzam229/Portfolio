@@ -1,76 +1,57 @@
-import React from "react";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import styled from "styled-components";
 
 const Top = styled.div`
   width: 100%;
   display: flex;
-  max-width: 100%;
   gap: 12px;
 `;
+
 const Image = styled.img`
-  height: 50px;
+  height: 48px;
+  width: 48px;
+  object-fit: cover;
   border-radius: 10px;
-  margin-top: 4px;
-  @media only screen and (max-width: 768) {
-    height: 40px;
-  }
+  background: #fff;
 `;
+
 const Body = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 2px;
 `;
-const School = styled.div`
-  font-weight: 600;
-  font-size: 18px;
-  color: ${({ theme }) => theme.text_primary + 99};
 
-  @media only screen and (max-width: 768) {
-    font-size: 14px;
-  }
+const School = styled.h3`
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: ${({ theme }) => theme.text_primary};
 `;
-const Degree = styled.div`
+
+const Degree = styled.p`
   font-weight: 500;
   font-size: 14px;
-  color: ${({ theme }) => theme.text_primary + 99};
-
-  @media only screen and (max-width: 768) {
-    font-size: 12px;
-  }
+  color: ${({ theme }) => theme.primary};
 `;
-const Duration = styled.div`
-  font-weight: 400;
+
+const Duration = styled.p`
   font-size: 12px;
-  color: ${({ theme }) => theme.text_primary + 80};
-
-  @media only screen and (max-width: 768) {
-    font-size: 10px;
-  }
+  color: ${({ theme }) => theme.text_secondary};
 `;
 
-const Description = styled.div`
-  width: 100%;
-  font-size: 15px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.text_primary + 80};
-  margin-bottom: 10px;
-  @media only screen and (max-width: 768) {
-    font-size: 12px;
-  }
-`;
-
-const Span = styled.div`
-  display: -webkit-box;
-  max-width: 100%;
-`;
-
-const Grade = styled.div`
+const Description = styled.p`
   font-size: 14px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.text_secondary + 99};
-  @media only screen and (max-width: 768px) {
-    font-size: 12px;
+  line-height: 1.7;
+  color: ${({ theme }) => theme.text_secondary};
+`;
+
+const Grade = styled.p`
+  font-size: 13px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.text_primary};
+
+  span {
+    color: ${({ theme }) => theme.accent};
   }
 `;
 
@@ -88,26 +69,26 @@ const EducationCard = ({ item }) => {
       }
       iconStyle={{
         background: "#fff",
-        boxShadow: "0 0 0 4px #854CE6",
+        boxShadow: "0 0 0 4px #e8c07a",
       }}
       contentStyle={{
         display: "flex",
         flexDirection: "column",
         gap: "12px",
-        background: "#1d1836",
         color: "#fff",
-        boxShadow: "rgba(23, 92, 230, 0.15) 0px 4px 24px",
-        backgroundColor: "rgba(17, 25, 40, 0.83)",
-        border: "1px solid rgba(255,255,255,0.125",
-        borderRadius: "6px",
+        background: "rgba(13, 18, 27, 0.92)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: "18px",
+        boxShadow: "0 12px 32px rgba(0,0,0,0.25)",
+        padding: "22px",
       }}
       contentArrowStyle={{
-        borderRight: "7px solid rgba(255, 255, 255, 0.3)",
+        borderRight: "7px solid rgba(255, 255, 255, 0.12)",
       }}
       date={item.date}
     >
       <Top>
-        <Image src={item.img}></Image>
+        <Image src={item.img} alt={item.school} />
         <Body>
           <School>{item.school}</School>
           <Degree>{item.degree}</Degree>
@@ -115,9 +96,9 @@ const EducationCard = ({ item }) => {
         </Body>
       </Top>
       <Grade>
-        <b>Grade : </b> {item.grade}
+        Grade: <span>{item.grade}</span>
       </Grade>
-      <Description>{item?.desc && <Span>{item.desc}</Span>}</Description>
+      {item.desc && <Description>{item.desc}</Description>}
     </VerticalTimelineElement>
   );
 };

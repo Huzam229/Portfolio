@@ -1,82 +1,57 @@
-import React from "react";
 import { VerticalTimelineElement } from "react-vertical-timeline-component";
 import styled from "styled-components";
 
 const Top = styled.div`
   width: 100%;
   display: flex;
-  max-width: 100%;
   gap: 12px;
 `;
+
 const Image = styled.img`
-  height: 50px;
+  height: 48px;
+  width: 48px;
+  object-fit: contain;
   border-radius: 10px;
-  margin-top: 4px;
-  @media only screen and (max-width: 768) {
-    height: 40px;
-  }
+  background: #fff;
+  padding: 4px;
 `;
+
 const Body = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 2px;
 `;
-const Role = styled.div`
-  font-weight: 600;
-  font-size: 18px;
-  color: ${({ theme }) => theme.text_primary + 99};
 
-  @media only screen and (max-width: 768) {
-    font-size: 14px;
-  }
+const Role = styled.h3`
+  font-family: "Syne", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: ${({ theme }) => theme.text_primary};
 `;
-const Company = styled.div`
+
+const Company = styled.p`
   font-weight: 500;
   font-size: 14px;
-  color: ${({ theme }) => theme.text_primary + 99};
-
-  @media only screen and (max-width: 768) {
-    font-size: 12px;
-  }
+  color: ${({ theme }) => theme.primary};
 `;
-const Duration = styled.div`
-  font-weight: 400;
+
+const Duration = styled.p`
   font-size: 12px;
-  color: ${({ theme }) => theme.text_primary + 80};
-
-  @media only screen and (max-width: 768) {
-    font-size: 10px;
-  }
+  color: ${({ theme }) => theme.text_secondary};
 `;
 
-const Description = styled.div`
-  width: 100%;
-  font-size: 15px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.text_primary + 80};
-  margin-bottom: 10px;
-  @media only screen and (max-width: 768) {
-    font-size: 12px;
-  }
-`;
-const Skills = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 12px;
-  margin-top: -10px;
-`;
-const Span = styled.div`
-  display: -webkit-box;
-  max-width: 100%;
+const Description = styled.p`
+  font-size: 14px;
+  line-height: 1.7;
+  color: ${({ theme }) => theme.text_secondary};
 `;
 
-const Skill = styled.div`
-  font-size: 15px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.text_primary + 99};
-  @media only screen and (max-width: 768) {
-    font-size: 12px;
-  }
+const SkillsLabel = styled.p`
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.text_primary};
 `;
 
 const ItemWrapper = styled.div`
@@ -85,6 +60,14 @@ const ItemWrapper = styled.div`
   gap: 8px;
 `;
 
+const Skill = styled.span`
+  font-size: 12px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text_secondary};
+  border: 1px solid ${({ theme }) => theme.border};
+  border-radius: 999px;
+  padding: 4px 10px;
+`;
 
 const ExperienceCard = ({ item }) => {
   return (
@@ -100,48 +83,43 @@ const ExperienceCard = ({ item }) => {
       }
       iconStyle={{
         background: "#fff",
-        boxShadow: "0 0 0 4px #854CE6",
+        boxShadow: "0 0 0 4px #2ee6c7",
       }}
       contentStyle={{
         display: "flex",
         flexDirection: "column",
         gap: "12px",
-        background: "#1d1836",
         color: "#fff",
-        boxShadow: "rgba(23, 92, 230, 0.15) 0px 4px 24px",
-        backgroundColor: "rgba(17, 25, 40, 0.83)",
-        border: "1px solid rgba(255,255,255,0.125",
-        borderRadius: "6px",
+        background: "rgba(13, 18, 27, 0.92)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: "18px",
+        boxShadow: "0 12px 32px rgba(0,0,0,0.25)",
+        padding: "22px",
       }}
       contentArrowStyle={{
-        borderRight: "7px solid rgba(255, 255, 255, 0.3)",
+        borderRight: "7px solid rgba(255, 255, 255, 0.12)",
       }}
       date={item.date}
     >
       <Top>
-        <Image src={item.img}></Image>
+        <Image src={item.img} alt={item.company} />
         <Body>
           <Role>{item.role}</Role>
           <Company>{item.company}</Company>
           <Duration>{item.date}</Duration>
         </Body>
       </Top>
-      <Description>
-        {item?.desc && <Span>{item.desc}</Span>}
-        {item?.skills && (
-          <>
-            <br />
-            <Skills>
-              <b>Skills</b>
-              <ItemWrapper>
-                {item?.skills?.map((skill, index) => (
-                  <Skill key={`skill- ${index}`}>• {skill}</Skill>
-                ))}
-              </ItemWrapper>
-            </Skills>
-          </>
-        )}
-      </Description>
+      {item.desc && <Description>{item.desc}</Description>}
+      {item.skills && (
+        <>
+          <SkillsLabel>Skills</SkillsLabel>
+          <ItemWrapper>
+            {item.skills.map((skill) => (
+              <Skill key={skill}>{skill}</Skill>
+            ))}
+          </ItemWrapper>
+        </>
+      )}
     </VerticalTimelineElement>
   );
 };

@@ -1,154 +1,150 @@
-import React from "react";
 import styled from "styled-components";
 
-const Card = styled.div`
-  max-width: 330px;
-  height: 490px;
-  background-color: ${({ theme }) => theme.card};
-  cursor: pointer;
-  border-radius: 10px;
-  box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.4);
-  overflow: hidden;
-  padding: 26px 20px;
-  flex-direction: column;
+const Card = styled.article`
   display: flex;
-  gap: 14px;
-  transition: all 0.5s ease-in-out;
+  flex-direction: column;
+  background: ${({ theme }) => theme.card};
+  border: 1px solid ${({ theme }) => theme.border};
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 100%;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
   &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 50px 4px rgba(0, 0, 0, 0.6);
-    filter: brightness(1.1);
+    transform: translateY(-6px);
+    border-color: rgba(46, 230, 199, 0.3);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
   }
+`;
+
+const ImageWrap = styled.div`
+  position: relative;
+  padding: 14px 14px 0;
 `;
 
 const Image = styled.img`
   width: 100%;
   height: 180px;
   object-fit: contain;
-  background-color: ${({ theme }) => theme.background};
-  border-radius: 10px;
+  background: ${({ theme }) => theme.bgLight};
+  border-radius: 14px;
+`;
+
+const Category = styled.span`
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #04110e;
+  background: ${({ theme }) => theme.primary};
+  padding: 5px 9px;
+  border-radius: 999px;
 `;
 
 const Details = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0px;
-  padding: 0px 2px;
+  gap: 8px;
+  padding: 18px 18px 8px;
+  flex: 1;
 `;
 
-const Title = styled.div`
+const Title = styled.h3`
+  font-family: "Syne", sans-serif;
   font-size: 20px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.text_secondary};
-  overflow: hidden;
-  display: -webkit-box;
-  max-width: 100%;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
+  font-weight: 700;
+  color: ${({ theme }) => theme.text_primary};
 `;
 
-const Date = styled.div`
+const Date = styled.p`
   font-size: 12px;
-  margin-left: 2px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.text_secondary + 88};
-  @media only screen and (max-width: 768px) {
-    font-size: 10px;
-  }
+  color: ${({ theme }) => theme.text_secondary};
+`;
+
+const Description = styled.p`
+  font-size: 14px;
+  line-height: 1.6;
+  color: ${({ theme }) => theme.text_secondary};
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 const Tags = styled.div`
-  width: 100%;
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 4px;
+  gap: 6px;
+  padding: 8px 18px 0;
 `;
 
-const Description = styled.div`
-  font-weight: 400;
-  color: ${({ theme }) => theme.text_secondary};
-  overflow: hidden;
-  display: -webkit-box;
-  margin-top: 8px;
-  max-width: 100%;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  @media only screen and (max-width: 768px) {
-    font-size: 10px;
-  }
-`;
-
-const Member = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-`;
-
-const Avatar = styled.img`
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  margin-left: -10px;
-  background-color: ${({ theme }) => theme.white};
-  box-shadow:
-    0,
-    0,
-    10px rgba(0, 0, 0, 0.2);
-  border: 3px solid ${({ theme }) => theme.card};
+const Tag = styled.span`
+  font-size: 11px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.primary};
+  background: rgba(46, 230, 199, 0.08);
+  border: 1px solid rgba(46, 230, 199, 0.16);
+  border-radius: 999px;
+  padding: 4px 8px;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
   gap: 10px;
-  margin-top: 12px;
+  padding: 16px 18px 18px;
+  margin-top: auto;
 `;
 
 const Button = styled.a`
-  flex: 1; // Make buttons equal width
+  flex: 1;
   text-decoration: none;
   text-align: center;
   font-weight: 600;
-  padding: 8px 12px;
-  border-radius: 30px;
-  border: 1px solid ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.primary};
-  transition: all 0.3s ease-in-out;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid ${({ theme, $filled }) => ($filled ? "transparent" : theme.border)};
+  background: ${({ theme, $filled }) => ($filled ? theme.primary : "transparent")};
+  color: ${({ theme, $filled }) => ($filled ? "#04110e" : theme.text_primary)};
+  transition: transform 0.2s ease, opacity 0.2s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.white};
+    transform: translateY(-1px);
+    opacity: 0.92;
   }
 `;
 
 export const ProjectCard = ({ item }) => {
+  const visibleTags = item.tags?.slice(0, 4) || [];
+  const extraTags = (item.tags?.length || 0) - visibleTags.length;
+
   return (
     <Card>
-      <Image src={item.image}></Image>
-      <Tags></Tags>
+      <ImageWrap>
+        <Image src={item.image} alt={item.title} />
+        <Category>{item.category}</Category>
+      </ImageWrap>
       <Details>
         <Title>{item.title}</Title>
         <Date>{item.date}</Date>
         <Description>{item.description}</Description>
       </Details>
-      <Member>
-        {item.member?.map((member, index) => (
-          <Avatar key={index} src={member.img} alt="Member" />
+      <Tags>
+        {visibleTags.map((tag) => (
+          <Tag key={tag}>{tag}</Tag>
         ))}
-      </Member>
+        {extraTags > 0 && <Tag>+{extraTags}</Tag>}
+      </Tags>
       <ButtonContainer>
-        <Button href={item.github} target="_blank">
-          View Code
+        <Button href={item.github} target="_blank" rel="noreferrer">
+          Code
         </Button>
-
-        {item.live && ( // Only render if item.live exists
-          <Button href={item?.live} target="_blank">
-            Live Preview
+        {item.live && (
+          <Button href={item.live} target="_blank" rel="noreferrer" $filled>
+            Live
           </Button>
         )}
       </ButtonContainer>

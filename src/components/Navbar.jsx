@@ -1,194 +1,204 @@
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import { Link as LinkR } from "react-router-dom";
 import { Bio } from "../data/constants";
-import { MenuRounded } from "@mui/icons-material";
-import { useState } from "react";
+import { MenuRounded, CloseRounded } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { FaGithub } from "react-icons/fa";
 
-const Nav = styled.div`
-  background-color: ${({ theme }) => theme.bg};
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
+const NAV_LINKS = [
+  { href: "#Skills", label: "Skills" },
+  { href: "#Experience", label: "Experience" },
+  { href: "#Projects", label: "Projects" },
+  { href: "#Education", label: "Education" },
+  { href: "#Contact", label: "Contact" },
+];
+
+const Nav = styled.nav`
   position: sticky;
   top: 0;
-  z-index: 10;
-  color: white;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  padding: 14px 20px 0;
 `;
 
 const NavbarContainer = styled.div`
   width: 100%;
-  max-width: 1200px;
-  padding: 0 24px 0 8px; 
+  max-width: 1180px;
+  height: 68px;
+  padding: 0 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: 1px solid
+    ${({ $scrolled, theme }) =>
+      $scrolled ? theme.border : "transparent"};
+  border-radius: 18px;
+  background: ${({ $scrolled, theme }) =>
+    $scrolled ? theme.glass : "transparent"};
+  backdrop-filter: ${({ $scrolled }) => ($scrolled ? "blur(18px)" : "none")};
+  box-shadow: ${({ $scrolled }) =>
+    $scrolled ? "0 10px 40px rgba(0, 0, 0, 0.28)" : "none"};
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 `;
 
 const NavBarLogo = styled(LinkR)`
-  width: 80%;
-  padding: 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
   color: inherit;
-  font-weight: 500;
-  font-size: 18px;
-  @media (max-width: 768px) {
-    margin-left: -40px; 
-  }
+`;
+
+const LogoImage = styled.img`
+  width: 118px;
+  height: auto;
 `;
 
 const NavItem = styled.ul`
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 32px;
-  padding: 0 6px;
+  gap: 6px;
   list-style: none;
-  @media screen and (max-width: 768px) {
+
+  @media (max-width: 900px) {
     display: none;
   }
 `;
 
 const NavLink = styled.a`
-  color: ${({ theme }) => theme.text_primary};
+  color: ${({ theme }) => theme.text_secondary};
   font-weight: 500;
+  font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
   text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: color 0.2s ease, background 0.2s ease;
+
   &:hover {
-    color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.text_primary};
+    background: rgba(255, 255, 255, 0.04);
   }
 `;
 
 const GitHubProfile = styled.a`
-  border: 1px solid ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.primary};
-  justify-content: center;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  border-radius: 20px;
-  cursor: pointer;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  transition: all 0.3s ease-in-out;
+  gap: 8px;
+  border: 1px solid ${({ theme }) => theme.border};
+  color: ${({ theme }) => theme.text_primary};
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 600;
   text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+
   &:hover {
-    background: ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.text_primary};
+    border-color: ${({ theme }) => theme.primary};
+    color: ${({ theme }) => theme.primary};
+    transform: translateY(-1px);
   }
 `;
 
 const ButtonContainer = styled.div`
-  width: 80%;
-  height: 100%;
   display: flex;
-  justify-content: end;
   align-items: center;
-  padding: 0 6px;
-  @media screen and (max-width: 768px) {
+
+  @media (max-width: 900px) {
     display: none;
   }
 `;
 
-const MobileIcon = styled.div`
-  color: ${({ theme }) => theme.text_primary};
+const MobileIcon = styled.button`
   display: none;
+  background: transparent;
+  border: 0;
+  color: ${({ theme }) => theme.text_primary};
   cursor: pointer;
-  @media screen and (max-width: 768px) {
-    display: block;
+  padding: 6px;
+
+  @media (max-width: 900px) {
+    display: flex;
   }
 `;
 
-const MobileMenu = styled.ul`
-  position: absolute;
-  top: 80px;
-  right: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 16px;
-  padding: 12px 40px 24px 40px;
-  list-style: none;
-  background: ${({ theme }) => theme.card_light + "99"};
-  transform: ${({ $openMenuIcon }) =>
-    $openMenuIcon ? "translateY(0)" : "translateY(-100%)"};
-  opacity: ${({ $openMenuIcon }) => ($openMenuIcon ? 1 : 0)};
-  z-index: ${({ $openMenuIcon }) => ($openMenuIcon ? 1000 : -1)};
-  border-radius: 0 0 20px 20px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease-in-out;
+const MobileMenu = styled.div`
+  display: none;
 
-  @media screen and (min-width: 769px) {
-    display: none;
+  @media (max-width: 900px) {
+    display: ${({ $open }) => ($open ? "flex" : "none")};
+    position: absolute;
+    top: 90px;
+    left: 20px;
+    right: 20px;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px;
+    list-style: none;
+    background: ${({ theme }) => theme.glass};
+    border: 1px solid ${({ theme }) => theme.border};
+    border-radius: 18px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    z-index: 30;
   }
-`;
-
-const LogoImage = styled.img`
-  width: 140px;
-  height: auto;
 `;
 
 const Navbar = () => {
-  const [openMenuIcon, setOpenMenuIcon] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const theme = useTheme();
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <Nav>
-      <NavbarContainer>
+      <NavbarContainer $scrolled={scrolled}>
         <NavBarLogo to="/">
-          <LogoImage src="/logo.png" />
+          <LogoImage src="/logo.png" alt="Muhammad Khuzama" />
         </NavBarLogo>
-        <MobileIcon onClick={() => setOpenMenuIcon(!openMenuIcon)}>
-          <MenuRounded style={{ color: "inherit" }} />
+
+        <MobileIcon
+          aria-label={openMenu ? "Close menu" : "Open menu"}
+          onClick={() => setOpenMenu((prev) => !prev)}
+        >
+          {openMenu ? <CloseRounded /> : <MenuRounded />}
         </MobileIcon>
 
-        {/* DeskTop Menu */}
-
         <NavItem>
-          <NavLink href="#Skills">Skills</NavLink>
-          <NavLink href="#Experience">Experience</NavLink>
-          <NavLink href="#Projects">Projects</NavLink>
-          <NavLink href="#Education">Education</NavLink>
-          <NavLink href="#Contact">Contact</NavLink>
+          {NAV_LINKS.map((link) => (
+            <li key={link.href}>
+              <NavLink href={link.href}>{link.label}</NavLink>
+            </li>
+          ))}
         </NavItem>
 
-        {/* Mobile Menu */}
-
-        <MobileMenu $openMenuIcon={openMenuIcon}>
-          <NavLink href="#Skills" onClick={() => setOpenMenuIcon(false)}>
-            Skills
-          </NavLink>
-          <NavLink href="#Experience" onClick={() => setOpenMenuIcon(false)}>
-            Experience
-          </NavLink>
-          <NavLink href="#Projects" onClick={() => setOpenMenuIcon(false)}>
-            Projects
-          </NavLink>
-          <NavLink href="#Education" onClick={() => setOpenMenuIcon(false)}>
-            Education
-          </NavLink>
-          <NavLink href="#Contact" onClick={() => setOpenMenuIcon(false)}>
-            Contact
-          </NavLink>{" "}
-          <GitHubProfile
-            href={Bio.github}
-            target="_blank"
-            style={{
-              background: theme.primary,
-              color: theme.text_primary,
-            }}
-          >
-            GitHub Profile
+        <MobileMenu $open={openMenu}>
+          {NAV_LINKS.map((link) => (
+            <NavLink
+              key={link.href}
+              href={link.href}
+              onClick={() => setOpenMenu(false)}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+          <GitHubProfile href={Bio.github} target="_blank" rel="noreferrer">
+            <FaGithub />
+            GitHub
           </GitHubProfile>
         </MobileMenu>
 
         <ButtonContainer>
-          <GitHubProfile href={Bio.github} target="_blank">
-            GitHub Profile
+          <GitHubProfile href={Bio.github} target="_blank" rel="noreferrer">
+            <FaGithub />
+            GitHub
           </GitHubProfile>
         </ButtonContainer>
       </NavbarContainer>
