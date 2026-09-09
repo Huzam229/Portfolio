@@ -89,7 +89,7 @@ const Footer = () => {
           © {new Date().getFullYear()} <span>{Bio.name}</span> · Designed to
           feel like a product, not a template.
         </Copy>
-        <NavLinks>
+        <NavLinks as="nav" aria-label="Footer">
           {LINKS.map((link) => (
             <NavLink key={link.href} href={link.href}>
               {link.label}

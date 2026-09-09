@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
@@ -17,14 +17,39 @@ const Earth = () => {
 
 useGLTF.preload("/planet/scene.gltf");
 
-/* 🌌 Canvas */
+const canUseWebGL = () => {
+  try {
+    const canvas = document.createElement("canvas");
+    const gl =
+      canvas.getContext("webgl2") ||
+      canvas.getContext("webgl") ||
+      canvas.getContext("experimental-webgl");
+    if (!gl) return false;
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 const EarthCanvas = () => {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    setEnabled(canUseWebGL());
+  }, []);
+
+  if (!enabled) return null;
+
   return (
     <Canvas
       shadows
       frameloop="always"
-      dpr={[1, 2]}
-      gl={{ preserveDrawingBuffer: true }}
+      dpr={[1, 1.5]}
+      gl={{
+        preserveDrawingBuffer: true,
+        failIfMajorPerformanceCaveat: false,
+      }}
       camera={{
         fov: 45,
         near: 0.1,
@@ -38,7 +63,7 @@ const EarthCanvas = () => {
         <Earth />
         <OrbitControls
           autoRotate
-          autoRotateSpeed={5}   // 👈 increase this value
+          autoRotateSpeed={5}
           enableZoom={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}

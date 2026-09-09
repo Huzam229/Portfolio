@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { Bio } from "../../data/constants";
 import { Section, SectionHeader, SectionInner } from "../shared/Section";
+import { motion } from "framer-motion";
+import { fadeUp, staggerContainer, viewportOnce } from "../../utils/motion";
 
 const Layout = styled.div`
   width: 100%;
@@ -18,7 +20,7 @@ const Layout = styled.div`
   }
 `;
 
-const InfoCard = styled.aside`
+const InfoCard = styled(motion.aside)`
   background: ${({ theme }) => theme.card};
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 22px;
@@ -71,7 +73,7 @@ const SocialLink = styled.a`
   }
 `;
 
-const ContactForm = styled.form`
+const ContactForm = styled(motion.form)`
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -187,8 +189,14 @@ const Contact = () => {
           title="Contact"
           description="Have a role, a product idea, or a question? I am always open to thoughtful conversations."
         />
-        <Layout>
-          <InfoCard>
+        <Layout
+          as={motion.div}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewportOnce}
+          variants={staggerContainer}
+        >
+          <InfoCard variants={fadeUp}>
             <div>
               <InfoTitle>Let&apos;s build something worth shipping.</InfoTitle>
               <InfoText>
@@ -207,7 +215,7 @@ const Contact = () => {
               </SocialLink>
             </Socials>
           </InfoCard>
-          <ContactForm ref={form} onSubmit={handleSubmit}>
+          <ContactForm ref={form} onSubmit={handleSubmit} variants={fadeUp}>
             <Field>
               Your name
               <ContactInput placeholder="Jane Doe" name="user_name" required />

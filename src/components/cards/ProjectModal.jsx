@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { CloseRounded } from "@mui/icons-material";
+import ProjectMedia from "./ProjectMedia";
 
 const Overlay = styled(motion.div)`
   position: fixed;
@@ -83,16 +84,8 @@ const Close = styled.button`
   }
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: 240px;
-  object-fit: contain;
-  background: ${({ theme }) => theme.bgLight};
+const MediaWrap = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.border};
-
-  @media (max-width: 640px) {
-    height: 180px;
-  }
 `;
 
 const Body = styled.div`
@@ -212,10 +205,10 @@ const ProjectModal = ({ item, onClose }) => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="project-modal-title"
-            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            initial={{ opacity: 0, y: 28, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ duration: 0.22 }}
+            exit={{ opacity: 0, y: 18, scale: 0.98 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             onClick={(event) => event.stopPropagation()}
           >
             <Header>
@@ -232,7 +225,15 @@ const ProjectModal = ({ item, onClose }) => {
                 <CloseRounded />
               </Close>
             </Header>
-            <Image src={item.image} alt={item.title} />
+            <MediaWrap>
+              <ProjectMedia
+                src={item.image}
+                alt={`${item.title} screenshot`}
+                title={item.title}
+                position={item.imagePosition}
+                eager
+              />
+            </MediaWrap>
             <Body>
               <Category>{item.category}</Category>
               <Title id="project-modal-title">{item.title}</Title>

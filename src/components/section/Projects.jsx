@@ -47,7 +47,8 @@ const ToggleButton = styled.button`
   transition: background 0.2s ease, color 0.2s ease;
 
   &:hover {
-    color: ${({ $active, theme }) => ($active ? theme.onPrimary : theme.text_primary)};
+    color: ${({ $active, theme }) =>
+      $active ? theme.onPrimary : theme.text_primary};
   }
 `;
 
@@ -60,8 +61,10 @@ const Count = styled.span`
   border-radius: 999px;
   display: inline-grid;
   place-items: center;
+  color: ${({ $active, theme }) =>
+    $active ? theme.onPrimary : theme.text_secondary};
   background: ${({ $active }) =>
-    $active ? "rgba(4, 17, 14, 0.16)" : "rgba(255, 255, 255, 0.06)"};
+    $active ? "rgba(4, 17, 14, 0.18)" : "rgba(255, 255, 255, 0.06)"};
 `;
 
 const CardContainer = styled.div`
@@ -106,7 +109,7 @@ const Projects = () => {
         <SectionHeader
           eyebrow="Selected work"
           title="Projects"
-          description="A mix of web and mobile products — from AI image tools to ride-hailing and restaurant platforms."
+          description="Selected web and Android work — AI image tools, restaurant platforms, ride-hailing, and real-time chat apps."
         />
         <ToggleButtonGroup>
           {FILTERS.map((filter) => (
@@ -128,14 +131,14 @@ const Projects = () => {
             </EmptyState>
           ) : (
             <AnimatePresence mode="popLayout">
-              {visibleProjects.map((item) => (
+              {visibleProjects.map((item, index) => (
                 <motion.div
                   key={item.id}
                   layout
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.25 }}
+                  transition={{ duration: 0.32, delay: index * 0.04 }}
                 >
                   <ProjectCard item={item} onOpen={setSelected} />
                 </motion.div>

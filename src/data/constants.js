@@ -2,7 +2,7 @@ export const Bio = {
   name: "Muhammad Khuzama",
   roles: ["Full Stack Developer", "Android Developer", "Programmer"],
   description:
-    "Driven by curiosity and a passion for growth, I embrace new challenges with confidence and creativity. I am committed to delivering high-quality work and continuously expanding my skills. With a positive mindset and a dedication to excellence, I aim to create meaningful impact in everything I do.",
+    "Full Stack and Android developer in Lahore. I build production web and mobile products with React, Node.js, Spring Boot, and React Native — from interface and API through to launch.",
   github: "https://github.com/Huzam229",
   resume:
     "https://drive.google.com/file/d/1k5C3tkNe_3Fpu-L_4OEJwy_aWzO6PVnO/view",
@@ -368,8 +368,8 @@ export const projects = [
     date: "Dec 2025 - Jan 2026",
     description:
       "Imago is an interactive web app where users can generate unique images and share them with the community. Each image is posted under the user’s name, allowing for a creative and engaging social experience, combining AI-powered image generation with community interaction.",
-    image:
-      "https://raw.githubusercontent.com/Huzam229/Image_generator/refs/heads/main/frontend/public/LandingPage.png",
+    image: "/projects/imago.jpg",
+    imagePosition: "center",
     tags: [
       "React Js",
       "PostgressSQL",
@@ -388,7 +388,8 @@ export const projects = [
     date: "Nov 2025 - Dec 2025",
     description:
       "Food Dungeon is a modern restaurant web app where users can browse menus and order delicious foods seamlessly. It features all essential user functionalities and a robust Admin Dashboard for managing menus, orders, and restaurant operations efficiently.",
-    image: "/LandingPage.png",
+    image: "/projects/food-dungeon.jpg",
+    imagePosition: "center",
     tags: [
       "React Js",
       "PostgressSQL",
@@ -408,8 +409,8 @@ export const projects = [
     date: "April 2023 - July 2023",
     description:
       "MovieHub - A React Native Movie Discovery App. MovieHub is a dynamic and user-friendly mobile application designed to bring the world of movies and TV shows right to your fingertips. Built with React Native, this app leverages the open-source TMDB API to provide real-time access to an extensive database of movies, TV shows, and related content. Whether you're a movie enthusiast or a casual viewer, MovieHub makes it easy to explore the latest releases, discover trending content, and dive into movie details, all from a sleek and intuitive interface.",
-    image:
-      "https://raw.githubusercontent.com/Huzam229/MovieHub/refs/heads/main/assets/image.jpg",
+    image: "/projects/moviehub.jpg",
+    imagePosition: "center top",
     tags: [
       "React Js",
       "PostgressSQL",
@@ -427,8 +428,8 @@ export const projects = [
     date: "Feb 2024 - May 2025",
     description:
       "Foodie- Food Delivery App with Google Maps Integration Foodie is a testing-based food delivery app designed to showcase the capabilities of mobile app development using modern tools and technologies. Developed with React Native, this app integrates the Google Maps API and Sanity.io to provide a seamless and dynamic food ordering experience. While the app is built primarily for testing purposes, it demonstrates the potential for real-world applications, combining location-based services and real-time content management for an engaging user experience.",
-    image:
-      "https://raw.githubusercontent.com/Huzam229/FoodApp/refs/heads/main/FoodApp/assets/image.jpg",
+    image: "/projects/foodie.jpg",
+    imagePosition: "center top",
     tags: [
       "React Js",
       "PostgressSQL",
@@ -446,8 +447,8 @@ export const projects = [
     date: "Dec 2025 - Feb 2026",
     description:
       "Rido is an Uber-like ride-hailing mobile application designed to provide a smooth and secure booking experience. The app integrates Clerk for authentication, Stripe for payments, and Google Maps APIs (Maps, Places, and Directions) to enable real-time location tracking, route visualization, and destination search. The backend is built using Express.js with NeonDB for scalable data storage and is deployed on Vercel. The frontend is developed using React Native with Tailwind CSS, ensuring a responsive and clean user interface across devices.",
-    image:
-      "https://raw.githubusercontent.com/Huzam229/Rido_App/refs/heads/main/uber-main/client/assets/image.png",
+    image: "/projects/rido.jpg",
+    imagePosition: "center top",
     tags: [
       "React Js",
       "PostgressSQL",
@@ -469,8 +470,8 @@ export const projects = [
     date: "Jan 2026 - Feb 2026",
     description:
       "Thumbix is a web application that enables users to generate custom thumbnails by adding a title, choosing an aspect ratio, selecting a color scheme, and applying style options. Users can also include additional information or prompts to customize their thumbnails further. The app provides a simple, intuitive interface for designing visually appealing thumbnails without needing image uploads. Built with modern web technologies, Thumbix highlights skills in front-end development, UI/UX design, and interactive user input handling.",
-    image:
-      "https://raw.githubusercontent.com/Huzam229/Thumbix/refs/heads/main/frontend/src/assets/image.png",
+    image: "/projects/thumbix.jpg",
+    imagePosition: "center",
     tags: [
       "React Js",
       "MongoDb",
@@ -489,8 +490,8 @@ export const projects = [
     date: "Feb 2026 - April 2026",
     description:
       "Chatterly is a real-time language learning web application that allows users to connect with friends, exchange messages, and practice languages through video calls. The platform is built using the MERN stack (MongoDB, Express.js, React.js, Node.js) and integrates the Stream Chat API to enable real-time messaging and communication. Users can send friend requests, chat instantly, and join video calls to improve their language skills through real conversations in a simple and interactive interface.",
-    image:
-      "https://raw.githubusercontent.com/Huzam229/Chatterly/refs/heads/main/frontend/public/Image_2.png",
+    image: "/projects/chatterly.jpg",
+    imagePosition: "center",
     tags: [
       "React Js",
       "MongoDb",

@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import ProjectMedia from "./ProjectMedia";
 
-const Card = styled.article`
+const Card = styled(motion.article)`
   display: flex;
   flex-direction: column;
   background: ${({ theme }) => theme.card};
@@ -9,10 +11,10 @@ const Card = styled.article`
   overflow: hidden;
   min-height: 100%;
   cursor: pointer;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-6px);
     border-color: ${({ theme }) => theme.primary};
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   }
@@ -21,20 +23,11 @@ const Card = styled.article`
 const ImageWrap = styled.div`
   position: relative;
   padding: 14px 14px 0;
-  overflow: hidden;
 `;
 
-const Image = styled.img`
-  width: 100%;
-  height: 180px;
-  object-fit: contain;
-  background: ${({ theme }) => theme.bgLight};
+const ImageFrame = styled.div`
   border-radius: 14px;
-  transition: transform 0.45s ease;
-
-  ${Card}:hover & {
-    transform: scale(1.05);
-  }
+  overflow: hidden;
 `;
 
 const Overlay = styled.div`
@@ -150,9 +143,22 @@ export const ProjectCard = ({ item, onOpen }) => {
   const extraTags = (item.tags?.length || 0) - visibleTags.length;
 
   return (
-    <Card onClick={() => onOpen(item)}>
+    <Card
+      data-project-card
+      whileHover={{ y: -8 }}
+      whileTap={{ scale: 0.99 }}
+      transition={{ type: "spring", stiffness: 320, damping: 24 }}
+      onClick={() => onOpen(item)}
+    >
       <ImageWrap>
-        <Image src={item.image} alt={item.title} />
+        <ImageFrame>
+          <ProjectMedia
+            src={item.image}
+            alt={`${item.title} screenshot`}
+            title={item.title}
+            position={item.imagePosition}
+          />
+        </ImageFrame>
         <Overlay>View details</Overlay>
         <Category>{item.category}</Category>
       </ImageWrap>

@@ -219,10 +219,15 @@ const Navbar = () => {
   };
 
   return (
-    <Nav>
+    <Nav aria-label="Primary">
       <NavbarContainer $scrolled={scrolled}>
         <NavBarLogo to="/" onClick={scrollHome}>
-          <LogoImage src="/logo.png" alt="Muhammad Khuzama" />
+          <LogoImage
+            src="/logo.png"
+            width={118}
+            height={44}
+            alt="Muhammad Khuzama, Full Stack Developer"
+          />
         </NavBarLogo>
 
         <MobileIcon

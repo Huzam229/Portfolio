@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { skills } from "../../data/constants";
 import { Section, SectionHeader, SectionInner } from "../shared/Section";
-import { motion } from "framer-motion";
+import { fadeUp, staggerFast, viewportOnce } from "../../utils/motion";
 
 const SkillGrid = styled.div`
   width: 100%;
@@ -19,11 +20,10 @@ const SkillCard = styled(motion.article)`
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 20px;
   padding: 24px;
-  transition: border-color 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.25s ease;
 
   &:hover {
     border-color: ${({ theme }) => theme.primary};
-    transform: translateY(-4px);
   }
 
   @media (min-width: 861px) {
@@ -47,7 +47,7 @@ const SkillList = styled.div`
   gap: 10px;
 `;
 
-const SkillItem = styled.div`
+const SkillItem = styled(motion.div)`
   font-size: 14px;
   font-weight: 500;
   color: ${({ theme }) => theme.text_secondary};
@@ -79,22 +79,40 @@ const Skills = () => {
         <SectionHeader
           eyebrow="Toolkit"
           title="Skills"
-          description="Tools I have spent the last three years refining — the stack I use to ship clean interfaces, reliable backends, and mobile products."
+          description="React, Node.js, Spring Boot, and React Native — the stack I use to ship clean interfaces, reliable backends, and Android apps."
         />
         <SkillGrid>
           {skills.map((group, index) => (
             <SkillCard
               key={group.title}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.4, delay: index * 0.06 }}
+              initial="hidden"
+              whileInView="show"
+              viewport={viewportOnce}
+              variants={{
+                hidden: { opacity: 0, y: 24 },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.45, delay: index * 0.08, staggerChildren: 0.04 },
+                },
+              }}
+              whileHover={{ y: -6 }}
             >
-              <SkillTitle>{group.title}</SkillTitle>
-              <SkillList>
+              <SkillTitle as={motion.h3} variants={fadeUp}>
+                {group.title}
+              </SkillTitle>
+              <SkillList as={motion.div} variants={staggerFast}>
                 {group.skills.map((skill) => (
-                  <SkillItem key={skill.name}>
-                    <SkillImage src={skill.image} alt="" />
+                  <SkillItem key={skill.name} variants={fadeUp} whileHover={{ y: -2, scale: 1.03 }}>
+                    <SkillImage
+                      src={skill.image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      onError={(event) => {
+                        event.currentTarget.style.visibility = "hidden";
+                      }}
+                    />
                     {skill.name}
                   </SkillItem>
                 ))}

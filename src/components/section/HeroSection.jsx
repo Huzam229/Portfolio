@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { Bio, experiences, projects } from "../../data/constants";
 import Typewriter from "typewriter-effect";
-import my_image from "../../images/my_image.png";
 import HeroBgAnimation from "../HeroBgAnimation";
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
-import { headContainerAnimation, headTextAnimation } from "../../utils/motion";
+import { fadeUp, headContainerAnimation, scaleIn, staggerContainer, staggerFast } from "../../utils/motion";
 import { PrimaryButton, GhostButton } from "../shared/Buttons";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
@@ -115,6 +114,13 @@ const Title = styled.h1`
   color: ${({ theme }) => theme.text_primary};
 `;
 
+const Profession = styled.p`
+  margin-top: 10px;
+  font-size: clamp(18px, 2.4vw, 22px);
+  font-weight: 600;
+  color: ${({ theme }) => theme.primary};
+`;
+
 const TextLoop = styled.div`
   font-weight: 600;
   font-size: clamp(20px, 3vw, 28px);
@@ -213,7 +219,7 @@ const Stat = styled.div`
   }
 `;
 
-const PortraitWrap = styled.div`
+const PortraitWrap = styled(motion.div)`
   position: relative;
   width: min(380px, 82vw);
 `;
@@ -225,6 +231,19 @@ const Glow = styled.div`
   background: radial-gradient(circle, ${({ theme }) => theme.glow}, transparent 68%);
   filter: blur(18px);
   z-index: 0;
+  animation: glowPulse 5.5s ease-in-out infinite;
+
+  @keyframes glowPulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+  }
 `;
 
 const Img = styled.img`
@@ -258,8 +277,7 @@ const HeroBg = styled.div`
 
 export const HeroSection = () => {
   return (
-    <div id="about">
-      <HeroContainer>
+    <HeroContainer id="about" aria-labelledby="hero-name">
         <HeroBg>
           <HeroBgAnimation />
         </HeroBg>
@@ -275,69 +293,91 @@ export const HeroSection = () => {
         >
           <HeroInnerContainer>
             <HeroLeftContainer>
-              <motion.div {...headTextAnimation}>
-                <Status>
-                  <Pulse />
-                  Open to new opportunities
-                </Status>
-                <Greeting>Hello, I am</Greeting>
-                <Title>{Bio.name}</Title>
-                <TextLoop>
-                  I build as a
-                  <Span>
-                    <Typewriter
-                      options={{
-                        strings: Bio.roles,
-                        autoStart: true,
-                        loop: true,
-                      }}
-                    />
-                  </Span>
-                </TextLoop>
+              <motion.div
+                initial="hidden"
+                animate="show"
+                variants={staggerContainer}
+              >
+                <motion.div variants={fadeUp}>
+                  <Status>
+                    <Pulse />
+                    Open to new opportunities
+                  </Status>
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <Greeting>Hello, I am</Greeting>
+                  <Title id="hero-name">{Bio.name}</Title>
+                  <Profession>Full Stack &amp; Android Developer</Profession>
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <TextLoop>
+                    I build as a
+                    <Span>
+                      <Typewriter
+                        options={{
+                          strings: Bio.roles,
+                          autoStart: true,
+                          loop: true,
+                        }}
+                      />
+                    </Span>
+                  </TextLoop>
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <SubTitle>{Bio.description}</SubTitle>
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <CtaRow>
+                    <PrimaryButton href={Bio.resume} target="_blank" rel="noreferrer">
+                      View Resume
+                    </PrimaryButton>
+                    <GhostButton href="#Projects">See work</GhostButton>
+                  </CtaRow>
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <SocialRow>
+                    <SocialLink href={Bio.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+                      <FaGithub />
+                    </SocialLink>
+                    <SocialLink href={Bio.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                      <FaLinkedin />
+                    </SocialLink>
+                  </SocialRow>
+                </motion.div>
+                <Stats as={motion.div} variants={staggerFast}>
+                  <Stat as={motion.div} variants={fadeUp}>
+                    <strong>3+</strong>
+                    <span>Years crafting products</span>
+                  </Stat>
+                  <Stat as={motion.div} variants={fadeUp}>
+                    <strong>{projects.length}</strong>
+                    <span>Shipped projects</span>
+                  </Stat>
+                  <Stat as={motion.div} variants={fadeUp}>
+                    <strong>Now</strong>
+                    <span>
+                      {experiences[0]?.role} @ {experiences[0]?.company}
+                    </span>
+                  </Stat>
+                </Stats>
               </motion.div>
-              <SubTitle>{Bio.description}</SubTitle>
-              <CtaRow>
-                <PrimaryButton href={Bio.resume} target="_blank" rel="noreferrer">
-                  View Resume
-                </PrimaryButton>
-                <GhostButton href="#Projects">See work</GhostButton>
-              </CtaRow>
-              <SocialRow>
-                <SocialLink href={Bio.github} target="_blank" rel="noreferrer" aria-label="GitHub">
-                  <FaGithub />
-                </SocialLink>
-                <SocialLink href={Bio.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                  <FaLinkedin />
-                </SocialLink>
-              </SocialRow>
-              <Stats>
-                <Stat>
-                  <strong>3+</strong>
-                  <span>Years crafting products</span>
-                </Stat>
-                <Stat>
-                  <strong>{projects.length}</strong>
-                  <span>Shipped projects</span>
-                </Stat>
-                <Stat>
-                  <strong>Now</strong>
-                  <span>
-                    {experiences[0]?.role} @ {experiences[0]?.company}
-                  </span>
-                </Stat>
-              </Stats>
             </HeroLeftContainer>
             <HeroRightContainer>
               <Tilt glareEnable glareMaxOpacity={0.12} scale={1.02}>
-                <PortraitWrap>
+                <PortraitWrap variants={scaleIn} initial="hidden" animate="show">
                   <Glow />
-                  <Img src={my_image} alt="Muhammad Khuzama" />
+                  <Img
+                    src="/profile.png"
+                    width={380}
+                    height={380}
+                    fetchPriority="high"
+                    alt="Muhammad Khuzama, Full Stack and Android developer"
+                  />
                 </PortraitWrap>
               </Tilt>
             </HeroRightContainer>
           </HeroInnerContainer>
         </motion.div>
       </HeroContainer>
-    </div>
-  );
+    );
 };

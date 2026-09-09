@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import { fadeUp, staggerContainer, viewportOnce } from "../../utils/motion";
 
 export const Section = styled.section`
   width: 100%;
@@ -22,7 +24,7 @@ export const SectionInner = styled.div`
   align-items: center;
 `;
 
-const HeaderWrap = styled.header`
+const HeaderWrap = styled(motion.header)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,9 +65,18 @@ const Description = styled.p`
 `;
 
 export const SectionHeader = ({ eyebrow, title, description }) => (
-  <HeaderWrap>
-    {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-    <Title>{title}</Title>
-    {description && <Description>{description}</Description>}
+  <HeaderWrap
+    initial="hidden"
+    whileInView="show"
+    viewport={viewportOnce}
+    variants={staggerContainer}
+  >
+    {eyebrow && <Eyebrow as={motion.span} variants={fadeUp}>{eyebrow}</Eyebrow>}
+    <Title as={motion.h2} variants={fadeUp}>{title}</Title>
+    {description && (
+      <Description as={motion.p} variants={fadeUp}>
+        {description}
+      </Description>
+    )}
   </HeaderWrap>
 );

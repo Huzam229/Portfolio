@@ -68,3 +68,53 @@ export const headContainerAnimation = {
   animate: { x: 0, opacity: 1, transition: { ...transition, delay: 0 } },
   exit: { x: -100, opacity: 0, transition: { ...transition, delay: 0 } },
 };
+
+const ease = [0.22, 1, 0.36, 1];
+
+export const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease },
+  },
+};
+
+export const fadeIn = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { duration: 0.5, ease },
+  },
+};
+
+export const scaleIn = {
+  hidden: { opacity: 0, scale: 0.92 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.6, ease },
+  },
+};
+
+export const staggerContainer = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.08,
+    },
+  },
+};
+
+export const staggerFast = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.045,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+export const viewportOnce = { once: true, amount: 0.2 };

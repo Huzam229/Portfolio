@@ -1,4 +1,4 @@
-import { Suspense, useRef, useMemo } from "react";
+import { Suspense, useMemo, useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, Preload } from "@react-three/drei";
 import * as random from "maath/random/dist/maath-random.esm";
@@ -13,6 +13,21 @@ const StyledStarWrapper = styled.div`
   pointer-events: none;
 `;
 
+const canUseWebGL = () => {
+  try {
+    const canvas = document.createElement("canvas");
+    const gl =
+      canvas.getContext("webgl2") ||
+      canvas.getContext("webgl") ||
+      canvas.getContext("experimental-webgl");
+    if (!gl) return false;
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 const Stars = (props) => {
   const groupRef = useRef();
 
@@ -22,7 +37,7 @@ const Stars = (props) => {
         radius: 1.5,
         seed: 42,
       }),
-    [],
+    []
   );
 
   useFrame((state, delta) => {
@@ -39,11 +54,10 @@ const Stars = (props) => {
         <PointMaterial
           transparent
           color="#7ef0dc"
-          size={0.002} // Smaller size for more star-like appearance
+          size={0.002}
           sizeAttenuation={true}
           depthWrite={false}
           opacity={0.8}
-          // blending={2} // Additive blending for glow effect
         />
       </Points>
     </group>
@@ -51,17 +65,25 @@ const Stars = (props) => {
 };
 
 const StyledStarCanvas = () => {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    setEnabled(canUseWebGL());
+  }, []);
+
+  if (!enabled) return null;
+
   return (
-    <StyledStarWrapper>
+    <StyledStarWrapper aria-hidden="true">
       <Canvas
-        camera={{ position: [0, 0, 1], fov: 85 }} // Much closer camera
+        camera={{ position: [0, 0, 1], fov: 85 }}
         gl={{
           alpha: true,
           antialias: true,
-          // powerPreference: "high-performance",
+          failIfMajorPerformanceCaveat: false,
         }}
         style={{ background: "transparent" }}
-        dpr={[1, 2]} // Device pixel ratio for sharper rendering
+        dpr={[1, 1.5]}
       >
         <Suspense fallback={null}>
           <Stars />

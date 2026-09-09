@@ -23,6 +23,28 @@ const Body = styled.div`
   position: relative;
 `;
 
+const Main = styled.main`
+  position: relative;
+  z-index: 1;
+`;
+
+const SkipLink = styled.a`
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  z-index: 50;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.primary};
+  color: ${({ theme }) => theme.onPrimary};
+  font-weight: 700;
+  text-decoration: none;
+
+  &:focus {
+    top: 16px;
+  }
+`;
+
 const AmbientGlow = styled.div`
   position: relative;
   padding-bottom: 40px;
@@ -96,20 +118,23 @@ function App() {
         />
         <ScrollProgress />
         <Body>
+          <SkipLink href="#Projects">Skip to projects</SkipLink>
           <Navbar />
           <StyledStarCanvas />
           <Grain />
-          <HeroSection />
-          <TechMarquee />
-          <AmbientGlow>
-            <Skills />
-            <Experience />
-          </AmbientGlow>
-          <Projects />
-          <AmbientGlow>
-            <Education />
-            <Contact />
-          </AmbientGlow>
+          <Main>
+            <HeroSection />
+            <TechMarquee />
+            <AmbientGlow>
+              <Skills />
+              <Experience />
+            </AmbientGlow>
+            <Projects />
+            <AmbientGlow>
+              <Education />
+              <Contact />
+            </AmbientGlow>
+          </Main>
           <Footer />
           <ScrollToTop />
         </Body>
