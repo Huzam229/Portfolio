@@ -1,12 +1,14 @@
+import { lazy, Suspense } from "react";
 import styled from "styled-components";
 import { education } from "../../data/constants";
 import { VerticalTimeline } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import EducationCard from "../cards/EducationCard";
-import EarthCanvas from "../Canvas/Earth";
 import { Section, SectionHeader, SectionInner } from "../shared/Section";
 import { motion } from "framer-motion";
 import { fadeUp, viewportOnce } from "../../utils/motion";
+
+const EarthCanvas = lazy(() => import("../Canvas/Earth"));
 
 const TimelineWrap = styled.div`
   width: 100%;
@@ -16,10 +18,10 @@ const CanvasWrap = styled.div`
   width: 100%;
   max-width: 520px;
   height: 360px;
-  margin-top: 24px;
+  margin: 24px auto 0;
 
-  @media (max-width: 768px) {
-    height: 260px;
+  @media (max-width: 960px) {
+    display: none;
   }
 `;
 
@@ -52,7 +54,9 @@ const Education = () => {
           viewport={viewportOnce}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <EarthCanvas />
+          <Suspense fallback={null}>
+            <EarthCanvas />
+          </Suspense>
         </CanvasWrap>
       </SectionInner>
     </Section>

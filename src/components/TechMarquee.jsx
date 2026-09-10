@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { skills } from "../data/constants";
 
@@ -70,12 +71,20 @@ const uniqueSkills = skills
 const loopedSkills = [...uniqueSkills, ...uniqueSkills];
 
 const TechMarquee = () => {
+  const [showIcons, setShowIcons] = useState(false);
+
+  useEffect(() => {
+    setShowIcons(window.matchMedia("(min-width: 961px)").matches);
+  }, []);
+
   return (
     <Wrap aria-hidden="true">
       <Track>
         {loopedSkills.map((skill, index) => (
           <Chip key={`${skill.name}-${index}`}>
-            <Icon src={skill.image} alt="" />
+            {showIcons && (
+              <Icon src={skill.image} alt="" loading="lazy" decoding="async" />
+            )}
             {skill.name}
           </Chip>
         ))}

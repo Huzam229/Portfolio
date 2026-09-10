@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
-import { CloseRounded } from "@mui/icons-material";
+import { IoClose } from "react-icons/io5";
 import ProjectMedia from "./ProjectMedia";
 
 const Overlay = styled(motion.div)`
@@ -222,7 +222,7 @@ const ProjectModal = ({ item, onClose }) => {
                 aria-label="Close project details"
                 onClick={onClose}
               >
-                <CloseRounded />
+                <IoClose size={22} />
               </Close>
             </Header>
             <MediaWrap>

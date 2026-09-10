@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme } from "./utils/Themes";
 import Navbar from "./components/Navbar";
@@ -7,13 +8,14 @@ import ScrollToTop from "./components/ScrollToTop";
 import TechMarquee from "./components/TechMarquee";
 import { BrowserRouter } from "react-router-dom";
 import { HeroSection } from "./components/section/HeroSection";
-import Skills from "./components/section/Skills";
-import Experience from "./components/section/Experience";
-import Education from "./components/section/Education";
-import StyledStarCanvas from "./components/Canvas/Stars";
-import Projects from "./components/section/Projects";
-import Contact from "./components/section/Contact";
 import { Toaster } from "react-hot-toast";
+
+const Skills = lazy(() => import("./components/section/Skills"));
+const Experience = lazy(() => import("./components/section/Experience"));
+const Education = lazy(() => import("./components/section/Education"));
+const Projects = lazy(() => import("./components/section/Projects"));
+const Contact = lazy(() => import("./components/section/Contact"));
+const StyledStarCanvas = lazy(() => import("./components/Canvas/Stars"));
 
 const Body = styled.div`
   background: ${({ theme }) => theme.bg};
@@ -74,6 +76,13 @@ const AmbientGlow = styled.div`
     bottom: 4%;
     background: rgba(232, 192, 122, 0.06);
   }
+
+  @media (max-width: 960px) {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
 `;
 
 const Grain = styled.div`
@@ -83,7 +92,35 @@ const Grain = styled.div`
   z-index: 8;
   opacity: 0.035;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+
+  @media (max-width: 960px) {
+    display: none;
+  }
 `;
+
+const DeferredStars = () => {
+  const [load, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 960px)").matches) return undefined;
+
+    const enable = () => setLoad(true);
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(enable, { timeout: 1200 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const timer = window.setTimeout(enable, 250);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  if (!load) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <StyledStarCanvas />
+    </Suspense>
+  );
+};
 
 function App() {
   return (
@@ -120,20 +157,22 @@ function App() {
         <Body>
           <SkipLink href="#Projects">Skip to projects</SkipLink>
           <Navbar />
-          <StyledStarCanvas />
+          <DeferredStars />
           <Grain />
           <Main>
             <HeroSection />
             <TechMarquee />
-            <AmbientGlow>
-              <Skills />
-              <Experience />
-            </AmbientGlow>
-            <Projects />
-            <AmbientGlow>
-              <Education />
-              <Contact />
-            </AmbientGlow>
+            <Suspense fallback={null}>
+              <AmbientGlow>
+                <Skills />
+                <Experience />
+              </AmbientGlow>
+              <Projects />
+              <AmbientGlow>
+                <Education />
+                <Contact />
+              </AmbientGlow>
+            </Suspense>
           </Main>
           <Footer />
           <ScrollToTop />

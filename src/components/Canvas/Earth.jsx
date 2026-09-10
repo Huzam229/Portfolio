@@ -15,8 +15,6 @@ const Earth = () => {
   );
 };
 
-useGLTF.preload("/planet/scene.gltf");
-
 const canUseWebGL = () => {
   try {
     const canvas = document.createElement("canvas");
@@ -36,6 +34,7 @@ const EarthCanvas = () => {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    if (window.matchMedia("(max-width: 960px)").matches) return;
     setEnabled(canUseWebGL());
   }, []);
 

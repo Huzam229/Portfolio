@@ -33,7 +33,7 @@ const Stars = (props) => {
 
   const sphere = useMemo(
     () =>
-      random.inSphere(new Float32Array(8000 * 3), {
+      random.inSphere(new Float32Array(4000 * 3), {
         radius: 1.5,
         seed: 42,
       }),

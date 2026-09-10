@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Link as LinkR } from "react-router-dom";
 import { Bio } from "../data/constants";
-import { MenuRounded, CloseRounded } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 
 const NAV_LINKS = [
   { href: "#about", label: "About" },
@@ -23,9 +23,14 @@ const Nav = styled.nav`
   justify-content: center;
   padding: 12px 20px;
   background: ${({ theme }) => theme.bg};
+
+  @media (max-width: 980px) {
+    padding: 10px 16px;
+  }
 `;
 
 const NavbarContainer = styled.div`
+  position: relative;
   width: 100%;
   max-width: 1140px;
   height: 68px;
@@ -40,6 +45,10 @@ const NavbarContainer = styled.div`
   box-shadow: ${({ $scrolled }) =>
     $scrolled ? "0 10px 40px rgba(0, 0, 0, 0.28)" : "none"};
   transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+  @media (max-width: 980px) {
+    padding: 0 14px;
+  }
 `;
 
 const NavBarLogo = styled(LinkR)`
@@ -54,6 +63,10 @@ const LogoImage = styled.img`
   width: 118px;
   height: auto;
   display: block;
+
+  @media (max-width: 980px) {
+    width: 96px;
+  }
 `;
 
 const NavItem = styled.ul`
@@ -152,10 +165,12 @@ const MobileMenu = styled.div`
   @media (max-width: 980px) {
     display: ${({ $open }) => ($open ? "flex" : "none")};
     position: absolute;
-    top: 90px;
-    left: 20px;
-    right: 20px;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     gap: 8px;
     padding: 18px;
     background: ${({ theme }) => theme.glass};
@@ -234,7 +249,7 @@ const Navbar = () => {
           aria-label={openMenu ? "Close menu" : "Open menu"}
           onClick={() => setOpenMenu((prev) => !prev)}
         >
-          {openMenu ? <CloseRounded /> : <MenuRounded />}
+          {openMenu ? <HiOutlineX size={24} /> : <HiOutlineMenu size={24} />}
         </MobileIcon>
 
         <NavItem>

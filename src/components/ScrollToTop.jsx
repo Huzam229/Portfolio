@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { KeyboardArrowUp } from "@mui/icons-material";
+import { FaChevronUp } from "react-icons/fa";
 
 const Button = styled.button`
   position: fixed;
@@ -49,7 +49,7 @@ const ScrollToTop = () => {
       aria-label="Scroll to top"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
-      <KeyboardArrowUp />
+      <FaChevronUp />
     </Button>
   );
 };

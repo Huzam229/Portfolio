@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { skills } from "../../data/constants";
@@ -73,6 +74,12 @@ const SkillImage = styled.img`
 `;
 
 const Skills = () => {
+  const [showIcons, setShowIcons] = useState(false);
+
+  useEffect(() => {
+    setShowIcons(window.matchMedia("(min-width: 961px)").matches);
+  }, []);
+
   return (
     <Section id="Skills">
       <SectionInner>
@@ -104,6 +111,7 @@ const Skills = () => {
               <SkillList as={motion.div} variants={staggerFast}>
                 {group.skills.map((skill) => (
                   <SkillItem key={skill.name} variants={fadeUp} whileHover={{ y: -2, scale: 1.03 }}>
+                    {showIcons && (
                     <SkillImage
                       src={skill.image}
                       alt=""
@@ -113,6 +121,7 @@ const Skills = () => {
                         event.currentTarget.style.visibility = "hidden";
                       }}
                     />
+                    )}
                     {skill.name}
                   </SkillItem>
                 ))}

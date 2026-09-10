@@ -1,12 +1,14 @@
+import { lazy, Suspense, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Bio, experiences, projects } from "../../data/constants";
 import Typewriter from "typewriter-effect";
-import HeroBgAnimation from "../HeroBgAnimation";
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 import { fadeUp, headContainerAnimation, scaleIn, staggerContainer, staggerFast } from "../../utils/motion";
 import { PrimaryButton, GhostButton } from "../shared/Buttons";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+
+const HeroBgAnimation = lazy(() => import("../HeroBgAnimation"));
 
 const HeroContainer = styled.section`
   display: flex;
@@ -14,9 +16,11 @@ const HeroContainer = styled.section`
   position: relative;
   padding: 72px 30px 96px;
   z-index: 1;
+  overflow: hidden;
 
   @media (max-width: 960px) {
-    padding: 48px 16px 72px;
+    padding: 36px 16px 56px;
+    text-align: center;
   }
 `;
 
@@ -32,8 +36,9 @@ const HeroInnerContainer = styled.div`
 
   @media (max-width: 960px) {
     grid-template-columns: 1fr;
+    justify-items: center;
     text-align: center;
-    gap: 40px;
+    gap: 28px;
   }
 `;
 
@@ -46,6 +51,8 @@ const HeroLeftContainer = styled.div`
   @media (max-width: 960px) {
     align-items: center;
     order: 2;
+    max-width: 520px;
+    margin: 0 auto;
   }
 `;
 
@@ -59,8 +66,9 @@ const HeroRightContainer = styled.div`
 
   @media (max-width: 960px) {
     order: 1;
-    transform: translateY(-8px);
+    transform: none;
     margin-top: 0;
+    justify-content: center;
   }
 `;
 
@@ -112,6 +120,12 @@ const Title = styled.h1`
   letter-spacing: -0.04em;
   line-height: 1.05;
   color: ${({ theme }) => theme.text_primary};
+  text-wrap: balance;
+
+  @media (max-width: 960px) {
+    font-size: clamp(30px, 8.4vw, 42px);
+    width: 100%;
+  }
 `;
 
 const Profession = styled.p`
@@ -132,7 +146,12 @@ const TextLoop = styled.div`
   min-height: 42px;
 
   @media (max-width: 960px) {
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    text-align: center;
+    min-height: 0;
+    gap: 4px;
   }
 `;
 
@@ -149,6 +168,8 @@ const SubTitle = styled.p`
 
   @media (max-width: 960px) {
     font-size: 16px;
+    margin-left: auto;
+    margin-right: auto;
   }
 `;
 
@@ -157,15 +178,23 @@ const CtaRow = styled.div`
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 22px;
+  width: 100%;
 
   @media (max-width: 960px) {
     justify-content: center;
+    align-items: center;
   }
 `;
 
 const SocialRow = styled.div`
   display: flex;
   gap: 10px;
+  justify-content: flex-start;
+
+  @media (max-width: 960px) {
+    justify-content: center;
+    width: 100%;
+  }
 `;
 
 const SocialLink = styled.a`
@@ -194,8 +223,13 @@ const Stats = styled.div`
   max-width: 480px;
   margin-top: 28px;
 
+  @media (max-width: 960px) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+    gap: 8px;
   }
 `;
 
@@ -204,6 +238,11 @@ const Stat = styled.div`
   border-radius: 14px;
   border: 1px solid ${({ theme }) => theme.border};
   background: rgba(255, 255, 255, 0.025);
+
+  @media (max-width: 960px) {
+    text-align: center;
+    padding: 12px 8px;
+  }
 
   strong {
     display: block;
@@ -222,6 +261,7 @@ const Stat = styled.div`
 const PortraitWrap = styled(motion.div)`
   position: relative;
   width: min(380px, 82vw);
+  margin: 0 auto;
 `;
 
 const Glow = styled.div`
@@ -275,109 +315,144 @@ const HeroBg = styled.div`
   }
 `;
 
+const CopyStack = styled(motion.div)`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: 960px) {
+    align-items: center;
+    text-align: center;
+
+    & > * {
+      width: 100%;
+    }
+  }
+`;
+
 export const HeroSection = () => {
+  const [desktop, setDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 961px)");
+    const sync = () => setDesktop(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const portrait = (
+    <PortraitWrap variants={scaleIn} initial="hidden" animate="show">
+      <Glow />
+      <Img
+        src="/profile.jpg"
+        width={380}
+        height={380}
+        fetchPriority="high"
+        alt="Muhammad Khuzama, Full Stack and Android developer"
+      />
+    </PortraitWrap>
+  );
+
   return (
     <HeroContainer id="about" aria-labelledby="hero-name">
+      {desktop && (
         <HeroBg>
-          <HeroBgAnimation />
+          <Suspense fallback={null}>
+            <HeroBgAnimation />
+          </Suspense>
         </HeroBg>
-        <motion.div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            position: "relative",
-            zIndex: 1,
-          }}
-          {...headContainerAnimation}
-        >
-          <HeroInnerContainer>
-            <HeroLeftContainer>
-              <motion.div
-                initial="hidden"
-                animate="show"
-                variants={staggerContainer}
-              >
-                <motion.div variants={fadeUp}>
-                  <Status>
-                    <Pulse />
-                    Open to new opportunities
-                  </Status>
-                </motion.div>
-                <motion.div variants={fadeUp}>
-                  <Greeting>Hello, I am</Greeting>
-                  <Title id="hero-name">{Bio.name}</Title>
-                  <Profession>Full Stack &amp; Android Developer</Profession>
-                </motion.div>
-                <motion.div variants={fadeUp}>
-                  <TextLoop>
-                    I build as a
-                    <Span>
-                      <Typewriter
-                        options={{
-                          strings: Bio.roles,
-                          autoStart: true,
-                          loop: true,
-                        }}
-                      />
-                    </Span>
-                  </TextLoop>
-                </motion.div>
-                <motion.div variants={fadeUp}>
-                  <SubTitle>{Bio.description}</SubTitle>
-                </motion.div>
-                <motion.div variants={fadeUp}>
-                  <CtaRow>
-                    <PrimaryButton href={Bio.resume} target="_blank" rel="noreferrer">
-                      View Resume
-                    </PrimaryButton>
-                    <GhostButton href="#Projects">See work</GhostButton>
-                  </CtaRow>
-                </motion.div>
-                <motion.div variants={fadeUp}>
-                  <SocialRow>
-                    <SocialLink href={Bio.github} target="_blank" rel="noreferrer" aria-label="GitHub">
-                      <FaGithub />
-                    </SocialLink>
-                    <SocialLink href={Bio.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
-                      <FaLinkedin />
-                    </SocialLink>
-                  </SocialRow>
-                </motion.div>
-                <Stats as={motion.div} variants={staggerFast}>
-                  <Stat as={motion.div} variants={fadeUp}>
-                    <strong>3+</strong>
-                    <span>Years crafting products</span>
-                  </Stat>
-                  <Stat as={motion.div} variants={fadeUp}>
-                    <strong>{projects.length}</strong>
-                    <span>Shipped projects</span>
-                  </Stat>
-                  <Stat as={motion.div} variants={fadeUp}>
-                    <strong>Now</strong>
-                    <span>
-                      {experiences[0]?.role} @ {experiences[0]?.company}
-                    </span>
-                  </Stat>
-                </Stats>
+      )}
+      <motion.div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          position: "relative",
+          zIndex: 1,
+        }}
+        {...headContainerAnimation}
+      >
+        <HeroInnerContainer>
+          <HeroLeftContainer>
+            <CopyStack initial="hidden" animate="show" variants={staggerContainer}>
+              <motion.div variants={fadeUp}>
+                <Status>
+                  <Pulse />
+                  Open to new opportunities
+                </Status>
               </motion.div>
-            </HeroLeftContainer>
-            <HeroRightContainer>
+              <motion.div variants={fadeUp}>
+                <Greeting>Hello, I am</Greeting>
+                <Title id="hero-name">{Bio.name}</Title>
+                <Profession>Full Stack &amp; Android Developer</Profession>
+              </motion.div>
+              <motion.div variants={fadeUp}>
+                <TextLoop>
+                  I build as a
+                  <Span>
+                    <Typewriter
+                      options={{
+                        strings: Bio.roles,
+                        autoStart: true,
+                        loop: true,
+                      }}
+                    />
+                  </Span>
+                </TextLoop>
+              </motion.div>
+              <motion.div variants={fadeUp}>
+                <SubTitle>{Bio.description}</SubTitle>
+              </motion.div>
+              <motion.div variants={fadeUp}>
+                <CtaRow>
+                  <PrimaryButton href={Bio.resume} target="_blank" rel="noreferrer">
+                    View Resume
+                  </PrimaryButton>
+                  <GhostButton href="#Projects">See work</GhostButton>
+                </CtaRow>
+              </motion.div>
+              <motion.div variants={fadeUp}>
+                <SocialRow>
+                  <SocialLink href={Bio.github} target="_blank" rel="noreferrer" aria-label="GitHub">
+                    <FaGithub />
+                  </SocialLink>
+                  <SocialLink href={Bio.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                    <FaLinkedin />
+                  </SocialLink>
+                </SocialRow>
+              </motion.div>
+              <Stats as={motion.div} variants={staggerFast}>
+                <Stat as={motion.div} variants={fadeUp}>
+                  <strong>3+</strong>
+                  <span>Years crafting products</span>
+                </Stat>
+                <Stat as={motion.div} variants={fadeUp}>
+                  <strong>{projects.length}</strong>
+                  <span>Shipped projects</span>
+                </Stat>
+                <Stat as={motion.div} variants={fadeUp}>
+                  <strong>Now</strong>
+                  <span>
+                    {experiences[0]?.role} @ {experiences[0]?.company}
+                  </span>
+                </Stat>
+              </Stats>
+            </CopyStack>
+          </HeroLeftContainer>
+          <HeroRightContainer>
+            {desktop ? (
               <Tilt glareEnable glareMaxOpacity={0.12} scale={1.02}>
-                <PortraitWrap variants={scaleIn} initial="hidden" animate="show">
-                  <Glow />
-                  <Img
-                    src="/profile.png"
-                    width={380}
-                    height={380}
-                    fetchPriority="high"
-                    alt="Muhammad Khuzama, Full Stack and Android developer"
-                  />
-                </PortraitWrap>
+                {portrait}
               </Tilt>
-            </HeroRightContainer>
-          </HeroInnerContainer>
-        </motion.div>
-      </HeroContainer>
-    );
+            ) : (
+              portrait
+            )}
+          </HeroRightContainer>
+        </HeroInnerContainer>
+      </motion.div>
+    </HeroContainer>
+  );
 };
+
